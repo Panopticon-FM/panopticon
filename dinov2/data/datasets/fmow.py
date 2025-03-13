@@ -91,7 +91,7 @@ class FmowDataset(Dataset):
         if split in ['train', 'val']: # TODO: add 'test_gt' -> it has missing files and parquet has to be cleaned up
             metadata_path = os.path.join(root, f'fmow/metadata_v2/fmow_iwm_onid_{split}.parquet')
         elif split is None:
-            metadata_path = os.path.join(root, 'fmow/metadata_v2/fmow_iwm_onid_train_val.parquet')
+            metadata_path = os.path.join(root, 'fmow/metadata_v2/fmow_iwm_onid_train_val_savioclean_min42max1024')
         else:
             metadata_path = os.path.join(root, os.path.expandvars(split))
         self.df = pd.read_parquet(metadata_path)
