@@ -79,7 +79,7 @@ train:
       root: ${oc.env:RDIR}/datasets/satlas
       num_sens: 2
       full_spectra: false
-      metadata_path: ${oc.env:RDIR}/datasets/satlas/metadata_v2/fmow_iwm_onid_3sensors_all_clean.parquet
+      metadata_path: ${oc.env:RDIR}/datasets/satlas/metadata_v2/satlas_iwm_onid_3sensors_all_clean.parquet
     - id: MMEarth
       base_path: ${oc.env:RDIR}/datasets/mmearth/data_1M_v001
       split: train
