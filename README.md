@@ -75,16 +75,28 @@ We use a combined fmow-fmow_sentinel dataset. To use this dataset, follows these
 
 ### SatlasPretrain
 <!-- While SatlasPretrain is about 12 TB, we actually only use about 1 TB of it.  -->
-coming soon
+Please follow the instructions on the original [Satlas-Pretrain repo](https://github.com/allenai/satlas/blob/main/SatlasPretrain.md) to download the following datasets:
+- Sentinel-2
+- Sentinel-1
+- Landsat 8/9
+We did not use NAIP for training since it is neither spectrally not geographically diverse, covering only RGB-NIR bands over the contiguous United States. However, it has imagery at 1m GSD, so you may consider it for your purposes.
 
 ### SpectralEarth
-coming soon
+Please download this dataset directly from the [DLR website](https://geoservice.dlr.de/web/datasets/enmap_spectralearth) by signing up and requesting it. We believe that the authors are expected to release this without requiring to sign up soon. Please contact the authors of [SpectralEarth](https://arxiv.org/abs/2408.08447) for this information directly.
+
+### Metadata Files
+
+In addition, to use these datasets as paired-sensor inputs, as required by this pretraining paradigm, you will need metadata files that are indexed by footprint. Please download the metadata files directly from this link and place each `metadata_v2` folder under the respective dataset directories.
+
+```
+COMING SOON
+```
 
 ## Evaluation Datasets
 ### GeoBench
 Follow the [official instructions](https://github.com/ServiceNow/geo-bench?tab=readme-ov-file#downloading-the-data) from GeoBench.
 
-### Resisc
+### RESISC45
 coming soon
 
 ### BigEarthNet-v2
@@ -140,7 +152,7 @@ To enable an exact comparison, the first commit is a git clone of the dinov2 cod
 
 
 ## Citing Panopticon
-If you find this work useful, consider citing
+If you find this work useful, consider citing (coming soon!)
 ```
 PROPER BIBTEX
 ```
