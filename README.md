@@ -86,13 +86,63 @@ Please download this dataset directly from the [DLR website](https://geoservice.
 
 ### Metadata Files
 
-In addition, to use these datasets as paired-sensor inputs, as required by this pretraining paradigm, you will need metadata files that are indexed by footprint. Please download the metadata files directly from this link and place each `metadata_v2` folder under the respective dataset directories.
+In addition, to use these datasets as paired-sensor inputs, as required by this pretraining paradigm, you will need metadata files that are indexed by footprint. Please download the metadata files directly from this link and place each `metadata_v2` folder under the respective dataset directories for `fmow`, `fmow-sentinel` and `satlas` only (`mmearth` and `spectral_earth` come pre-indexed by footprint). Your directory structure should be similar to the one below after acquiring all these datasets:
+
 
 ```
-COMING SOON
+datasets
+├── fmow
+│   ├── metadata_v2
+│   ├── seq
+│   ├── seq_gt
+│   ├── seq_gt_mapping.json
+│   ├── test
+│   ├── test_gt
+│   ├── test_gt_mapping.json
+│   ├── train
+│   └── val
+├── fmow-sentinel
+│   ├── metadata_v2
+│   ├── test_gt
+│   ├── train
+│   └── val
+├── mmearth
+│   ├── data_100k_v001
+│   └── data_1M_v001
+├── satlas
+│   ├── landsat
+│   ├── metadata_v2
+│   ├── sentinel1
+│   └── sentinel2
+└── spectral_earth
+    ├── cdl
+    ├── corine
+    ├── enmap
+    ├── nlcd
+    └── splits
+        ├── cdl
+        │   ├── test.txt
+        │   ├── train.txt
+        │   └── val.txt
+        ├── corine
+        │   ├── test.txt
+        │   ├── train.txt
+        │   └── val.txt
+        ├── enmap
+        │   └── train.txt
+        └── nlcd
+            ├── test.txt
+            ├── train.txt
+            └── val.txt
 ```
+Note: we are only showing the relevant files & directories above.
+
+
 
 ## Evaluation Datasets
+
+This codebase is limited in its ability to run comparitive benchmarking. We will soon release a separate codebase to do this rigorously. For now, to run eval on a limited set of dataset, use the following:
+
 ### GeoBench
 Follow the [official instructions](https://github.com/ServiceNow/geo-bench?tab=readme-ov-file#downloading-the-data) from GeoBench.
 
