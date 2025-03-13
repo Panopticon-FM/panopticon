@@ -51,7 +51,7 @@ The following env variables need to be put in `.env` file in the codebase root
 WANDB_PROJECT=your_wandb_proj_name
 GEO_BENCH_DIR=/path/to/geobench/dir
 RDIR=/path/to/resource/dir
-CDIR=/.../Panopticon/dinov2/configs
+CDIR=/.../panopticon/dinov2/configs
 ODIR=/path/to/output/dir
 ```
 Datsets are saved in `$RDIR/datasets/`.

@@ -57,10 +57,10 @@ class SatlasDataset(Dataset):
 
 
     def __init__(self, 
-            root = None,
+            root = '${RDIR}/datasets/satlas',
             num_sens:int = 2,
             normalize:bool = True, 
-            metadata_path = None,
+            metadata_path = '${RDIR}/datasets/satlas/metadata_v2/satlas_iwm_onid_3sensors_all_clean.parquet',
             keep_sensors = ['s1', 's2', 'landsat'],
             return_rgb = False,
             transform = None,
