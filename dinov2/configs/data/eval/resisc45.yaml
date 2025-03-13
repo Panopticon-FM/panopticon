@@ -1,0 +1,9 @@
+task_id: classification
+num_classes: 45
+img_size: 224
+
+
+bands: #using RGB from S2 for now
+- id: sentinel2/B04
+- id: sentinel2/B03
+- id: sentinel2/B02

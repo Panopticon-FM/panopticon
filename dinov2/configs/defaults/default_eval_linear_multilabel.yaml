@@ -1,0 +1,67 @@
+
+task:
+  id: multilabelclassification
+
+  val_metrics: # first metric will always be used to determine best classifier
+  - id: MultiLabelAveragePrecision
+    average: macro
+  - id: MultilabelAccuracy
+    average: micro
+    top_k: 1
+  - id: MultilabelAccuracy
+    average: macro
+    top_k: 1
+  - id: MultilabelAccuracy
+    average: micro
+    top_k: 5
+
+  test_metrics_list: []
+
+  criterion_cfg: 
+    id: MultiLabelSoftMarginLoss  
+
+_default_augms: # need to be referenced in configs (transform: ${_default_augms.train_augm})
+  train_augm:
+  - id: RandomResizedCrop
+    size: 224
+    scale: [0.2, 1.0]
+  - id: RandomHVFlip
+    p: 0.5
+  
+  test_augm:
+  - id: Resize
+    size: 224
+  - id: CenterCrop
+    size: 224
+
+train_dataset: null
+val_dataset: null 
+test_datasets_list: []
+
+heads:
+  n_last_blocks_list: [1, 4]
+  pooling: [avgpool, cls]
+  learning_rates: [1e-5, 2e-5, 5e-5, 1e-4, 2e-4, 5e-4, 1e-3, 2e-3, 5e-3, 1e-2, 2e-2, 5e-2, 0.1, 0.2, 0.3, 0.5, 1.0]
+
+optim:
+  epochs: 2
+  iter_per_epoch: -1  # -1 for full dataset or any number for cycling
+  
+  eval_period_epoch: 4
+  eval_period_iter: null
+  save_checkpoint_frequency_epoch: 50
+
+  dl:
+    batch_size: 256
+    num_workers: 4
+
+
+output_dir: '.'
+seed: 42
+
+
+# legacy args from dinov2, just initialize them to their defaults
+classifier_fpath: null
+val_class_mapping_fpath: null
+test_class_mapping_fpaths: [null]
+no_resume: False

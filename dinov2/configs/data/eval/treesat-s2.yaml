@@ -1,0 +1,19 @@
+task_id: multilabelclass
+num_classes: 15
+gsd: 10.
+img_size: 6
+bands:
+- id: sentinel2/B02
+- id: sentinel2/B03
+- id: sentinel2/B04
+- id: sentinel2/B08
+- id: sentinel2/B05
+- id: sentinel2/B06
+- id: sentinel2/B07
+- id: sentinel2/B8A
+- id: sentinel2/B11
+- id: sentinel2/B12
+- id: sentinel2/B01
+- id: sentinel2/B09
+
+modality: optical #sar, dem, lc

@@ -1,0 +1,31 @@
+
+bands:
+  B01:
+    gaussian:
+      mu: 1.0
+      sigma: 10.0
+    GSD: 60
+
+  B02:
+    gaussian:
+      mu: 2.0
+      sigma: 20.0
+    GSD: 10
+
+  B03:
+    gaussian:
+      mu: 3.0
+      sigma: 30.0
+    GSD: 10
+
+  B04:
+    gaussian:
+      mu: 4.0
+      sigma: 40.0
+    GSD: 10
+
+  B05:
+    gaussian:
+      mu: 5.0
+      sigma: 50.0
+    GSD: 20

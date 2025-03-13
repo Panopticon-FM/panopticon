@@ -1,0 +1,38 @@
+task:
+  id: classification
+
+  val_metrics:
+  - id: MulticlassAccuracy
+    top_k: 1
+    average: micro
+  - id: MulticlassAccuracy
+    top_k: 1
+    average: macro
+    
+
+train_dataset:
+  id: geobench.m-forestnet
+  split: train
+  transform: ${_default_augms.train_augm}
+
+val_dataset:
+  id: geobench.m-forestnet
+  split: val
+  transform: ${_default_augms.test_augm}
+
+test_datasets_list:
+- id: geobench.m-forestnet
+  split: test
+  display_name: test
+  transform: ${_default_augms.test_augm}
+
+
+optim:
+  epochs: 50
+  save_checkpoint_frequency_epoch: 10
+  eval_period_epoch: 100
+
+  dl:
+    batch_size: 600
+    num_workers: 16
+    persistent_workers: true

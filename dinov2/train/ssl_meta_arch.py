@@ -42,11 +42,6 @@ class SSLMetaArch(nn.Module):
         teacher_model_dict["backbone"] = teacher_backbone
         logger.info(f"OPTIONS -- architecture : embed_dim: {embed_dim}")
 
-        if cfg.student.pretrained_weights:
-            chkpt = torch.load(cfg.student.pretrained_weights)
-            logger.info(f"OPTIONS -- pretrained weights: loading from {cfg.student.pretrained_weights}")
-            student_backbone.load_state_dict(chkpt["model"], strict=False)
-
         self.embed_dim = embed_dim
         self.dino_out_dim = cfg.dino.head_n_prototypes
 
@@ -54,6 +49,10 @@ class SSLMetaArch(nn.Module):
         self.do_koleo = cfg.dino.koleo_loss_weight > 0
         self.do_ibot = cfg.ibot.loss_weight > 0
         self.ibot_separate_head = cfg.ibot.separate_head
+        
+        self.do_pe_distil = cfg.pe_distil.loss_weight > 0
+        # self.do_aux_loss = hasattr(cfg, 'aux_loss') and cfg.aux_loss is not None and hasattr(cfg.aux_loss, 'loss_weight') and cfg.aux_loss.loss_weight > 0
+        self.do_aux_loss = hasattr(cfg, 'aux_loss') and cfg.aux_loss is not None and cfg.aux_loss.enable
 
         logger.info("OPTIONS -- DINO")
         if self.do_dino:
@@ -86,6 +85,7 @@ class SSLMetaArch(nn.Module):
         logger.info(f"OPTIONS -- IBOT -- loss_weight: {cfg.ibot.loss_weight}")
         logger.info(f"OPTIONS -- IBOT masking -- ibot_mask_ratio_tuple: {cfg.ibot.mask_ratio_min_max}")
         logger.info(f"OPTIONS -- IBOT masking -- ibot_mask_sample_probability: {cfg.ibot.mask_sample_probability}")
+        
         if self.do_ibot:
             self.ibot_loss_weight = cfg.ibot.loss_weight
             assert max(cfg.ibot.mask_ratio_min_max) > 0, "please provide a positive mask ratio tuple for ibot"
@@ -110,6 +110,32 @@ class SSLMetaArch(nn.Module):
             else:
                 logger.info("OPTIONS -- IBOT -- head shared with DINO")
 
+        if self.do_aux_loss:
+            logger.info("OPTIONS -- AUX LOSS")
+            self.aux_loss_weight = [
+                cfg.aux_loss.gating_loss_weight,
+                cfg.aux_loss.diversity_loss_weight,
+                cfg.aux_loss.sparsity_loss_weight
+            ]
+            # Log all weights
+            logger.info(f"OPTIONS -- AUX LOSS -- gating_loss_weight: {self.aux_loss_weight[0]}")
+            logger.info(f"OPTIONS -- AUX LOSS -- diversity_loss_weight: {self.aux_loss_weight[1]}")
+            logger.info(f"OPTIONS -- AUX LOSS -- sparsity_loss_weight: {self.aux_loss_weight[2]}")
+
+
+        if self.do_pe_distil:
+            logger.info("OPTIONS -- PE DISTIL")
+            logger.info(f"OPTIONS -- PE DISTIL -- loss_weight: {cfg.pe_distil.loss_weight}")
+            self.pe_distil_loss_weight = cfg.pe_distil.loss_weight
+
+        self.gradient_accumulation_steps = cfg.get("gradient_accumulation_steps", 1)
+        if self.gradient_accumulation_steps > 1:
+            logger.info(f"OPTIONS -- GRADIENT ACCUMULATION -- gradient_accumulation_steps: {self.gradient_accumulation_steps}")
+            self.current_accumulation_step = 0
+            self.do_grad_accumulation = True
+        else:
+            self.do_grad_accumulation = False
+
         self.need_to_synchronize_fsdp_streams = True
 
         self.student = nn.ModuleDict(student_model_dict)
@@ -124,18 +150,29 @@ class SSLMetaArch(nn.Module):
         raise NotImplementedError
 
     def backprop_loss(self, loss):
+
+        if self.do_grad_accumulation:
+            loss = loss / self.gradient_accumulation_steps
+
         if self.fp16_scaler is not None:
             self.fp16_scaler.scale(loss).backward()
         else:
             loss.backward()
 
     def forward_backward(self, images, teacher_temp):
-        n_global_crops = 2
+        n_global_crops = self.global_crops_number
+        n_local_crops = self.local_crops_number
         assert n_global_crops == 2
-        n_local_crops = self.cfg.crops.local_crops_number
+        # assert n_global_crops == images['collated_global_crops']['imgs'].shape[1], print(n_global_crops, images['collated_global_crops']['imgs'].shape[1])
+        # assert n_local_crops == images['collated_local_crops']['imgs'].shape[1], print(n_local_crops, images['collated_local_crops']['imgs'].shape[1])
 
-        global_crops = images["collated_global_crops"].cuda(non_blocking=True)
-        local_crops = images["collated_local_crops"].cuda(non_blocking=True)
+        def to_cuda(x_dict, keys=['imgs']):
+            for k,v in x_dict.items():
+                if k in keys:
+                    x_dict[k] = v.cuda(non_blocking=True)
+            return x_dict
+        global_crops = to_cuda(images["collated_global_crops"])
+        local_crops = to_cuda(images["collated_local_crops"])
 
         masks = images["collated_masks"].cuda(non_blocking=True)
         mask_indices_list = images["mask_indices_list"].cuda(non_blocking=True)
@@ -339,6 +376,22 @@ class SSLMetaArch(nn.Module):
             # accumulate loss
             loss_accumulator += self.ibot_loss_weight * ibot_patch_loss
 
+        if self.do_aux_loss:
+            aux_losses = self.student.backbone.patch_embed.get_regularization_losses()  # list of 3 losses
+            # Element-wise multiplication and sum
+            weighted_aux_loss = sum(w * l for w, l in zip(self.aux_loss_weight, aux_losses))
+            loss_accumulator += weighted_aux_loss
+            # Store individual losses for better logging
+            loss_dict["aux_loss_gating"] = aux_losses[0]
+            loss_dict["aux_loss_diversity"] = aux_losses[1] 
+            loss_dict["aux_loss_sparsity"] = aux_losses[2]
+            loss_dict["aux_loss_total"] = weighted_aux_loss
+
+        if self.do_pe_distil:
+            pe_distil_loss = self.student.backbone.patch_embed.rgb_distil_sim
+            loss_accumulator += self.pe_distil_loss_weight * pe_distil_loss
+            loss_dict["pe_distil_loss"] = pe_distil_loss
+
         self.backprop_loss(loss_accumulator)
 
         self.fsdp_synchronize_streams()
@@ -368,11 +421,13 @@ class SSLMetaArch(nn.Module):
         super().train()
         self.teacher.eval()
 
-    def get_maybe_fused_params_for_submodel(self, m):
+    def get_maybe_fused_params_for_submodel(self, m, prefix=''):
         params_groups = get_params_groups_with_decay(
             model=m,
             lr_decay_rate=self.cfg.optim.layerwise_decay,
-            patch_embed_lr_mult=self.cfg.optim.patch_embed_lr_mult,
+            lr_multiplier=self.cfg.optim.lr_multiplier,
+            freeze_weights=self.cfg.optim.freeze_weights,
+            prefix=prefix
         )
         fused_params_groups = fuse_params_groups(params_groups)
         logger.info("fusing param groups")
@@ -383,8 +438,9 @@ class SSLMetaArch(nn.Module):
 
     def get_params_groups(self):
         all_params_groups = []
-        for m in self.student.values():
-            all_params_groups += self.get_maybe_fused_params_for_submodel(m)
+        for k,m in self.student.items():
+            logger.info(f'getting params for submodel {str(k)}')
+            all_params_groups += self.get_maybe_fused_params_for_submodel(m, prefix=k)
         return all_params_groups
 
     def prepare_for_distributed_training(self):

@@ -1,0 +1,33 @@
+task:
+  id: knn
+  metrics:
+  - id: MulticlassAccuracy
+    top_k: 1
+    average: micro
+    
+_vars: # not explicitly used in config, only as variables
+  transforms:
+  - id: Resize
+    size: 224
+  - id: ChnSelect
+    idxs: [0,4,5,6,7,8,9,10,11,12]
+
+train_dataset:
+  id: geobench.m-eurosat
+  split: train
+  transform: ${_vars.transforms}
+
+test_dataset:
+  id: geobench.m-eurosat
+  split: test
+  transform: ${_vars.transforms}
+
+heads: 
+  nb_knn: [20]
+  n_tries: 1
+
+optim:
+  dl:
+    batch_size: 200
+    num_workers: 4
+    persistent_workers: true

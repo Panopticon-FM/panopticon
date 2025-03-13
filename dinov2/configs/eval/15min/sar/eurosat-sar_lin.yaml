@@ -1,0 +1,42 @@
+task:
+  id: classification
+
+  val_metrics:
+  - id: MulticlassAccuracy
+    average: micro
+  - id: MulticlassAccuracy
+    average: macro
+
+_vars: # not explicitly used in config, only as variables
+  transform: # output is 120x120
+  - id: Resize
+    size: 224 # divisible by 14
+
+train_dataset:
+  id: eurosat-sar
+  root: ${oc.env:RDIR}/datasets/eurosat_SAR
+  split: train
+  transform: ${_vars.transform}
+
+val_dataset:
+  id: eurosat-sar
+  root: ${oc.env:RDIR}/datasets/eurosat_SAR
+  split: val
+  transform: ${_vars.transform}
+
+test_datasets_list:
+- id: eurosat-sar
+  root: ${oc.env:RDIR}/datasets/eurosat_SAR
+  split: test
+  transform: ${_vars.transform}
+
+optim:
+  epochs: 20 # or max_iter
+
+  save_checkpoint_frequency_epoch: 10
+  eval_period_epoch: 100
+
+  dl:
+    batch_size: 180
+    num_workers: 10
+    persistent_workers: true

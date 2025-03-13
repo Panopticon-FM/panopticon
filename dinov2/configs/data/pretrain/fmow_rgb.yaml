@@ -1,0 +1,14 @@
+bands:
+- id: qb2_ge1/B03
+- id: qb2_ge1/B02
+- id: qb2_ge1/B01
+
+modality: optical
+
+# the 4 band quickbird geoeye has the bands below, but since they overlap
+# with the rgb bands except for one and have lower res, we don't use
+# bands:
+# - id: qb2_ge1/B01
+# - id: qb2_ge1/B02
+# - id: qb2_ge1/B03
+# - id: qb2_ge1/B04

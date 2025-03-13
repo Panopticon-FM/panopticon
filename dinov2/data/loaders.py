@@ -3,19 +3,42 @@
 # This source code is licensed under the Apache License, Version 2.0
 # found in the LICENSE file in the root directory of this source tree.
 
+from dotenv import load_dotenv
+
+from dinov2.data.combined_ds import CombinedDataset, InfiniteCombinedBatchSampler, WdsMapWrapper, CombinedIterableDataset
+
+
+load_dotenv()
 import logging
 from enum import Enum
-from typing import Any, Callable, List, Optional, TypeVar
+from typing import Any, Callable, Iterable, List, Optional, TypeVar
 
 import torch
-from torch.utils.data import Sampler
+from torch.utils.data import Sampler, ConcatDataset
 
-from .datasets import ImageNet, ImageNet22k
+from dinov2.data.datasets.benv2 import BigEarthNetv2Wrapper, create_benv2_wds
+from dinov2.data.datasets.geobench import GeobenchDataset
+from dinov2.data.datasets.spectral_earth import SpectralEarthDataset
+from dinov2.data.datasets.mmearth import MMEarthWrapper
+from dinov2.data.datasets.satlas import SatlasDataset, SatlasWds
+from dinov2.data.datasets.eurosat_sar import EurosatSAR
+from dinov2.data.datasets.resisc45 import RESISC45
+from dinov2.data.augmentations import make_augmentation
+from torch.utils.data import Subset
+from dinov2.data.datasets.fmow_original import FmowDatasetOriginal
+from .datasets import DummyDataset, FmowDataset
 from .samplers import EpochSampler, InfiniteSampler, ShardedInfiniteSampler
+from copy import deepcopy
+
+import webdataset as wds
+
+import random
+import math
+
+
 
 
 logger = logging.getLogger("dinov2")
-
 
 class SamplerType(Enum):
     DISTRIBUTED = 0
@@ -25,76 +48,151 @@ class SamplerType(Enum):
     SHARDED_INFINITE_NEW = 4
 
 
-def _make_bool_str(b: bool) -> str:
-    return "yes" if b else "no"
+class ConcatDatasetTrf(ConcatDataset):
+    def __init__(self, datasets, transform=None):
+        super().__init__(datasets)
+        self.transform = transform
 
+    def __getitem__(self, idx):
+        x = super().__getitem__(idx)
+        if self.transform is not None:
+            x = self.transform(x)
+        return x
 
-def _make_sample_transform(image_transform: Optional[Callable] = None, target_transform: Optional[Callable] = None):
-    def transform(sample):
-        image, target = sample
-        if image_transform is not None:
-            image = image_transform(image)
-        if target_transform is not None:
-            target = target_transform(target)
-        return image, target
+def make_dataset(cfg, pretrain_augm_cfg=None, seed=42, resampled=True):
+    """ Main function to build datasets, resampled only used for eval wds """
 
-    return transform
+    cfg = deepcopy(cfg)
+    pretrain_augm_cfg = deepcopy(pretrain_augm_cfg)
+    id = cfg.pop('id')
+    transform_cfg = cfg.pop('transform', [])
+    subset = cfg.pop('subset', -1)
+    pretrain_augm_overwrites = cfg.pop('pretrain_augm_overwrites', {})
 
+    logger.info(f'Building dataset "{id}" ...')
 
-def _parse_dataset_str(dataset_str: str):
-    tokens = dataset_str.split(":")
+    # build transform
+    if pretrain_augm_cfg is not None:
+        pretrain_augm_cfg.update(pretrain_augm_overwrites)
+        transform_cfg.append(pretrain_augm_cfg)
+    transform = make_augmentation(transform_cfg)
 
-    name = tokens[0]
-    kwargs = {}
+    # build datasets for train
+    if id == 'DummyDataset':
+        ds = DummyDataset(**cfg, transform=transform)
+        ds_modalities_out = 1
 
-    for token in tokens[1:]:
-        key, value = token.split("=")
-        assert key in ("root", "extra", "split")
-        kwargs[key] = value
+    elif id == 'FmowDataset':
+        ds = FmowDataset(**cfg, transform=transform)
+        ds_modalities_out = ds.M
 
-    if name == "ImageNet":
-        class_ = ImageNet
-        if "split" in kwargs:
-            kwargs["split"] = ImageNet.Split[kwargs["split"]]
-    elif name == "ImageNet22k":
-        class_ = ImageNet22k
+    elif id == 'MMEarth':
+        ds = MMEarthWrapper(**cfg, transform=transform)
+        ds_modalities_out = len(ds.modalities)
+        if 'month' in ds.modalities:
+            ds_modalities_out -= 1
+
+    elif id == 'SpectralEarth':
+        ds = SpectralEarthDataset(**cfg, transform=transform)
+        ds_modalities_out = 1
+
+    elif id == 'SatlasDataset':
+        ds = SatlasDataset(**cfg, transform=transform)
+        ds_modalities_out = ds.M
+
+    elif id == 'satl_webdataset':
+        ds = SatlasWds(**cfg, transform=transform)
+        ds_modalities_out = ds.num_sens
+
+    elif id == 'ConcatDataset': # shuffle samples from all datasets
+        assert len(transform_cfg) <= 1, 'No additional transforms supported for ConcatDataset yet'
+        datasets = cfg.pop('datasets')
+        datasets = [make_dataset(d, seed=seed, pretrain_augm_cfg=pretrain_augm_cfg) for d in datasets]
+        ds = ConcatDataset(datasets)
+
+    elif id == 'CombinedDataset': # shuffle batches from all datasets
+        assert len(transform_cfg) == 1, 'No additional transforms supported for CombinedDataset yet'
+        ds_cfg_list = cfg.pop('datasets')
+        bsz_list = [d.pop('bsz') for d in ds_cfg_list]
+        pe_ids = [d.pop('pe_id', d['id']) for d in ds_cfg_list]
+        datasets = [make_dataset(d, seed=seed, pretrain_augm_cfg=pretrain_augm_cfg) for d in ds_cfg_list]
+        ds = CombinedDataset(datasets, bsz_list=bsz_list, pe_ids=pe_ids)
+        assert subset <= 0, 'Subset not supported for CombinedDataset'
+
+    elif id == 'CombinedIterableDataset':
+        assert len(transform_cfg) == 1, 'No additional transforms supported for CombinedIterableDataset yet'
+        ds_cfg_list = cfg.pop('datasets')
+        datasets = [make_dataset(d, seed=seed, pretrain_augm_cfg=pretrain_augm_cfg) for d in ds_cfg_list]
+        ds = CombinedIterableDataset(datasets, **cfg)
+        assert subset <= 0, 'Subset not supported for CombinedDataset'
+
+    elif id == 'WdsMapWrapper':
+        wds_cfg = cfg.pop('wds')
+        wds = make_dataset(wds_cfg, seed=seed)
+        ds = WdsMapWrapper(**cfg, wds=wds, transform=transform)
+
+    # build datasets for eval
+    elif 'geobench' in id:
+        ds = GeobenchDataset(ds_name=id.split('.')[1], **cfg, transform=transform)
+
+    elif id == 'benv2':
+        ds = BigEarthNetv2Wrapper(**cfg, transform=transform)
+
+    elif id == 'benv2_webdataset':
+        ds = create_benv2_wds(**cfg, 
+                                   transform=transform, 
+                                   resampled=resampled, 
+                                   subset=subset,
+                                   seed=seed)
+
+    elif id == 'eurosat-sar':
+        ds = EurosatSAR(**cfg, transform=transform)
+
+    elif id == 'resisc45':
+        ds = RESISC45(**cfg, transform=transform)
+
+    elif id == 'fmow':
+        ds = FmowDatasetOriginal(**cfg, transform=transform)
+
     else:
-        raise ValueError(f'Unsupported dataset "{name}"')
+        raise ValueError(f'Unsupported dataset "{id}"')
 
-    return class_, kwargs
+    if not isinstance(ds, torch.utils.data.IterableDataset):
+        logger.info(f'Built dataset "{id}" with #samples {len(ds)}')
+    else:
+        logger.info(f'Built dataset "{id}"')
 
+    # subset
 
-def make_dataset(
-    *,
-    dataset_str: str,
-    transform: Optional[Callable] = None,
-    target_transform: Optional[Callable] = None,
-):
-    """
-    Creates a dataset with the specified parameters.
+    if subset > 0 and not isinstance(ds, torch.utils.data.IterableDataset):
+        # logger.warn('Only for checking variance in seed!')
+        # seed = seed + random.randint(0, 1000) 
 
-    Args:
-        dataset_str: A dataset string description (e.g. ImageNet:split=TRAIN).
-        transform: A transform to apply to images.
-        target_transform: A transform to apply to targets.
+        def sample_indices(n, k):
+            generator = torch.Generator().manual_seed(seed)
+            return torch.multinomial(torch.ones(n) / n, k, replacement=False, generator=generator).tolist()
 
-    Returns:
-        The created dataset.
-    """
-    logger.info(f'using dataset: "{dataset_str}"')
-
-    class_, kwargs = _parse_dataset_str(dataset_str)
-    dataset = class_(transform=transform, target_transform=target_transform, **kwargs)
-
-    logger.info(f"# of dataset samples: {len(dataset):,d}")
-
-    # Aggregated datasets do not expose (yet) these attributes, so add them.
-    if not hasattr(dataset, "transform"):
-        setattr(dataset, "transform", transform)
-    if not hasattr(dataset, "target_transform"):
-        setattr(dataset, "target_transform", target_transform)
-
-    return dataset
+        if isinstance(subset, float):
+            assert 0.0 < subset <= 1.0, 'Float subset must be in range (0, 1].'
+            if subset < 1.0:
+                subset_indices = sample_indices(len(ds), int(len(ds)*subset))
+                ds = Subset(ds, subset_indices)
+        elif isinstance(subset, int):
+            assert subset > 0, 'Int subset must be greater than 0.'
+            if subset < len(ds):
+                subset_indices = sample_indices(len(ds), subset)
+                ds = Subset(ds, subset_indices)
+            else:
+                sampler = EpochSampler(size=subset, sample_count=len(ds), shuffle=False, seed=seed)
+                subset_indices = sampler._get_iterable().tolist()
+                ds = Subset(ds, subset_indices)
+        else:
+            raise ValueError(f'Unsupported subset type "{type(subset)}"')
+        logger.info(f'Got subset={subset}, subsampled dataset to #samples {len(ds)} ')
+    
+    if not hasattr(ds,'is_webdataset'):
+        ds.is_webdataset = False
+    return ds
 
 
 def _make_sampler(
@@ -105,6 +203,7 @@ def _make_sampler(
     seed: int = 0,
     size: int = -1,
     advance: int = 0,
+    drop_last: bool = False
 ) -> Optional[Sampler]:
     sample_count = len(dataset)
 
@@ -153,7 +252,7 @@ def _make_sampler(
             dataset=dataset,
             shuffle=shuffle,
             seed=seed,
-            drop_last=False,
+            drop_last=drop_last,
         )
 
     logger.info("sampler: none")
@@ -173,7 +272,8 @@ def make_data_loader(
     sampler_type: Optional[SamplerType] = SamplerType.INFINITE,
     sampler_size: int = -1,
     sampler_advance: int = 0,
-    drop_last: bool = True,
+    drop_last: bool = False,
+    pin_memory: bool = True,
     persistent_workers: bool = False,
     collate_fn: Optional[Callable[[List[T]], Any]] = None,
 ):
@@ -194,23 +294,60 @@ def make_data_loader(
         collate_fn: Function that performs batch collation
     """
 
-    sampler = _make_sampler(
-        dataset=dataset,
-        type=sampler_type,
-        shuffle=shuffle,
-        seed=seed,
-        size=sampler_size,
-        advance=sampler_advance,
-    )
+    if hasattr(dataset, 'is_webdataset') and dataset.is_webdataset:
+        logger.info("Detected WebDataset. Using DataLoader with WebLoader.")
 
-    logger.info("using PyTorch data loader")
+        dl = wds.WebLoader(
+            dataset,
+            batch_size=batch_size,
+            num_workers=num_workers,
+            persistent_workers=persistent_workers,
+            pin_memory=pin_memory,
+            collate_fn=collate_fn,)
+
+        if hasattr(dataset, '__len__'):
+            dl = dl.with_length(math.ceil(len(dataset) / batch_size))
+
+        return dl
+
+
+    if isinstance(dataset, CombinedDataset):
+        logger.info("Detected CombinedDataset. Using InfiniteCombinedBatchSampler.")
+
+        batch_sampler = InfiniteCombinedBatchSampler(
+            dataset,
+            shuffle=shuffle,
+            seed=seed,
+            drop_last=drop_last,
+            infinite=True)
+
+        bsz_kwargs = dict(
+            batch_sampler=batch_sampler)
+
+    else:
+        logger.info(f"Detected non-CombinedDataset. Using {sampler_type} with bsz={batch_size}.")
+
+        sampler = _make_sampler(
+            dataset=dataset,
+            type=sampler_type,
+            shuffle=shuffle,
+            seed=seed,
+            size=sampler_size,
+            advance=sampler_advance,
+            drop_last=drop_last)
+        
+        bsz_kwargs = dict(
+            batch_size=batch_size,
+            sampler=sampler,
+            drop_last=drop_last)
+
+    logger.info(f"DataLoader kwargs: num_workers={num_workers}, pin_memory={pin_memory}, drop_last={drop_last}, persistent_workers={persistent_workers}")
+    
     data_loader = torch.utils.data.DataLoader(
         dataset,
-        sampler=sampler,
-        batch_size=batch_size,
+        **bsz_kwargs,
         num_workers=num_workers,
-        pin_memory=True,
-        drop_last=drop_last,
+        pin_memory=pin_memory,
         persistent_workers=persistent_workers,
         collate_fn=collate_fn,
     )

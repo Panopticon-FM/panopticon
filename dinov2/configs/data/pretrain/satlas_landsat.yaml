@@ -1,0 +1,24 @@
+bands:
+  - id: landsat9/B01
+    img_size: 256
+  - id: landsat9/B02
+    img_size: 256
+  - id: landsat9/B03
+    img_size: 256
+  - id: landsat9/B04
+    img_size: 256
+  - id: landsat9/B05
+    img_size: 256
+  - id: landsat9/B06
+    img_size: 256
+  - id: landsat9/B07
+    img_size: 256
+  - id: landsat9/B08
+    img_size: 512
+  - id: landsat9/B09
+    img_size: 256
+  - id: landsat9/B10
+    img_size: 64
+  - id: landsat9/B11
+    img_size: 64
+

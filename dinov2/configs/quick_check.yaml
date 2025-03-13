@@ -1,0 +1,92 @@
+MODEL:
+  pretrained_weights: []
+
+dino:
+  loss_weight: 1.0
+  koleo_loss_weight: 0.0
+ibot:
+  loss_weight: 0.1 # (new default following prior ablations)
+train:
+  dataset: 
+    id: MMEarth
+    base_path: ${oc.env:RDIR}/datasets/mmearth/data_1M_v001
+    split: train
+    modalities: MODALITY_MINIMAL_SET1
+
+  pretrain_augm: 
+    id: PanopticonAugmentation
+
+    global_crops_number: 2
+    global_crops_size: 224
+    global_crops_scale: [0.32, 1.0]
+    global_crops_spectral_size: [4,13]
+    global_multi_select_view_in_single_sensor_modes: false
+    global_hs_modes_probs: [1,0]
+
+    local_crops_number: 4
+    local_crops_size: 98
+    local_crops_scale: [0.05, 0.32]
+    local_crops_spectral_size: [1,4]
+    local_multi_select_view_in_single_sensor_modes: true
+    local_hs_modes_probs: [1,0]
+
+  batch_size_per_gpu: 12
+  num_workers: 2
+  OFFICIAL_EPOCH_LENGTH: 10
+
+  use_wandb: true
+  saveckp_freq: 5
+  seed: 21
+  log_every_n_steps: 10
+
+student:
+  arch: vit_base
+  patch_size: 14
+  pos_emb_img_size: 518
+  drop_path_rate: 0.0
+  layerscale: 1.0e-05
+  embed_layer: PanopticonPE
+  pe_args:
+    attn_dim: 2304
+    chnfus_cfg:
+      layer_norm: false
+      chnemb_cfg: {}
+      attn_cfg:
+        num_heads: 16
+
+teacher: # values adjusted following distilling training hparams in DINOv2 paper
+  momentum_teacher: 0.994
+  final_momentum_teacher: 1.0
+  warmup_teacher_temp: 0.04
+  teacher_temp: 0.07
+  warmup_teacher_temp_epochs: 5
+
+optim:
+  epochs: 2
+  break_at_epochs: -1
+  weight_decay: 0.04
+  weight_decay_end: 0.2  # adjusted following distilling training hparams in DINOv2 paper
+  base_lr: 5e-4
+  warmup_epochs: 1
+  hold_epochs: 0
+  min_lr: 1.0e-06
+  lr_multiplier: blocks=0.2
+  freeze_weights: last_layer=1
+  scaling_rule: sqrt_wrt_1024
+  layerwise_decay: 0.9
+  adamw_beta1: 0.9
+  adamw_beta2: 0.999
+
+eval:
+  only_eval: false
+  skip: false
+
+  eval_period_epoch: 10
+  config_obj: ${oc.env:CDIR}/eval/5min/m-eurosat_knn.yaml
+  remove_ckpts: false
+  include_final_ckpt: true
+
+  final_model:
+    config_obj: ${oc.env:CDIR}/eval/5min/m-eurosat_knn.yaml
+    overwrite: false
+    overwrites: null

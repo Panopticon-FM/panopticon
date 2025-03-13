@@ -3,111 +3,60 @@
 # This source code is licensed under the Apache License, Version 2.0
 # found in the LICENSE file in the root directory of this source tree.
 
-from enum import Enum
+from copy import deepcopy
 import logging
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, List
 
 import torch
 from torch import Tensor
 from torchmetrics import Metric, MetricCollection
-from torchmetrics.classification import MulticlassAccuracy
-from torchmetrics.utilities.data import dim_zero_cat, select_topk
-
+from torchmetrics import Accuracy
+from torchmetrics.classification import MulticlassAccuracy, MultilabelAveragePrecision, MultilabelF1Score
+from dinov2 import distributed
 
 logger = logging.getLogger("dinov2")
 
 
-class MetricType(Enum):
-    MEAN_ACCURACY = "mean_accuracy"
-    MEAN_PER_CLASS_ACCURACY = "mean_per_class_accuracy"
-    PER_CLASS_ACCURACY = "per_class_accuracy"
-    IMAGENET_REAL_ACCURACY = "imagenet_real_accuracy"
+def build_metric(metric_cfg: List, num_classes):
+    metric_cfg = deepcopy(metric_cfg)
+    if isinstance(num_classes, Tensor):
+        num_classes = num_classes.item()
 
-    @property
-    def accuracy_averaging(self):
-        return getattr(AccuracyAveraging, self.name, None)
+    ret = {}
+    sync_on_compute = distributed.is_enabled()
+    for cfg in metric_cfg:
+        id = cfg.pop('id')
 
-    def __str__(self):
-        return self.value
+        if id == 'MulticlassAccuracy':
+            defaults = dict(top_k=1, average='micro')
+            defaults.update(cfg)
+            key = f'acc_top-{defaults["top_k"]}_{defaults["average"]}'
+            val = Accuracy(
+                num_classes=num_classes, task='multiclass', sync_on_compute=sync_on_compute, **defaults)
 
+        elif id == 'MultilabelAccuracy':
+            defaults = dict(top_k=1, average='micro')
+            defaults.update(cfg)
+            key = f'MulLabAcc_top-{defaults["top_k"]}_{defaults["average"]}'
+            val = Accuracy(
+                num_labels=num_classes, task='multilabel', sync_on_compute=sync_on_compute, **defaults)
 
-class AccuracyAveraging(Enum):
-    MEAN_ACCURACY = "micro"
-    MEAN_PER_CLASS_ACCURACY = "macro"
-    PER_CLASS_ACCURACY = "none"
+        elif id == 'MultiLabelAveragePrecision':
+            defaults = dict(average='macro')
+            defaults.update(cfg)
+            key = f'MulLabAvergPrec_{defaults["average"]}'
+            val = MultilabelAveragePrecision(
+                num_labels=num_classes, sync_on_compute=sync_on_compute, **defaults)
 
-    def __str__(self):
-        return self.value
+        elif id == 'MultiLabelF1Score': #macro and micro
+            defaults = dict(average='macro')
+            defaults.update(cfg)
+            key = f'MulLabF1ScoreMacro_{defaults["average"]}'
+            val = MultilabelF1Score(
+                num_labels=num_classes, sync_on_compute=sync_on_compute, **defaults)
 
-
-def build_metric(metric_type: MetricType, *, num_classes: int, ks: Optional[tuple] = None):
-    if metric_type.accuracy_averaging is not None:
-        return build_topk_accuracy_metric(
-            average_type=metric_type.accuracy_averaging,
-            num_classes=num_classes,
-            ks=(1, 5) if ks is None else ks,
-        )
-    elif metric_type == MetricType.IMAGENET_REAL_ACCURACY:
-        return build_topk_imagenet_real_accuracy_metric(
-            num_classes=num_classes,
-            ks=(1, 5) if ks is None else ks,
-        )
-
-    raise ValueError(f"Unknown metric type {metric_type}")
-
-
-def build_topk_accuracy_metric(average_type: AccuracyAveraging, num_classes: int, ks: tuple = (1, 5)):
-    metrics: Dict[str, Metric] = {
-        f"top-{k}": MulticlassAccuracy(top_k=k, num_classes=int(num_classes), average=average_type.value) for k in ks
-    }
-    return MetricCollection(metrics)
-
-
-def build_topk_imagenet_real_accuracy_metric(num_classes: int, ks: tuple = (1, 5)):
-    metrics: Dict[str, Metric] = {f"top-{k}": ImageNetReaLAccuracy(top_k=k, num_classes=int(num_classes)) for k in ks}
-    return MetricCollection(metrics)
-
-
-class ImageNetReaLAccuracy(Metric):
-    is_differentiable: bool = False
-    higher_is_better: Optional[bool] = None
-    full_state_update: bool = False
-
-    def __init__(
-        self,
-        num_classes: int,
-        top_k: int = 1,
-        **kwargs: Any,
-    ) -> None:
-        super().__init__(**kwargs)
-        self.num_classes = num_classes
-        self.top_k = top_k
-        self.add_state("tp", [], dist_reduce_fx="cat")
-
-    def update(self, preds: Tensor, target: Tensor) -> None:  # type: ignore
-        # preds [B, D]
-        # target [B, A]
-        # preds_oh [B, D] with 0 and 1
-        # select top K highest probabilities, use one hot representation
-        preds_oh = select_topk(preds, self.top_k)
-        # target_oh [B, D + 1] with 0 and 1
-        target_oh = torch.zeros((preds_oh.shape[0], preds_oh.shape[1] + 1), device=target.device, dtype=torch.int32)
-        target = target.long()
-        # for undefined targets (-1) use a fake value `num_classes`
-        target[target == -1] = self.num_classes
-        # fill targets, use one hot representation
-        target_oh.scatter_(1, target, 1)
-        # target_oh [B, D] (remove the fake target at index `num_classes`)
-        target_oh = target_oh[:, :-1]
-        # tp [B] with 0 and 1
-        tp = (preds_oh * target_oh == 1).sum(dim=1)
-        # at least one match between prediction and target
-        tp.clip_(max=1)
-        # ignore instances where no targets are defined
-        mask = target_oh.sum(dim=1) > 0
-        tp = tp[mask]
-        self.tp.append(tp)  # type: ignore
-
-    def compute(self) -> Tensor:
-        tp = dim_zero_cat(self.tp)  # type: ignore
-        return tp.float().mean()
+        else:
+            raise ValueError(f"Unknown metric {id}")
+        
+        ret[key] = val
+    return MetricCollection(ret)

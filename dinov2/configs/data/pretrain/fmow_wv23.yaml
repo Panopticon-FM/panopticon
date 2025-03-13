@@ -1,0 +1,11 @@
+bands:
+- id: wv23/B01
+- id: wv23/B02
+- id: wv23/B03
+- id: wv23/B04
+- id: wv23/B05
+- id: wv23/B06
+- id: wv23/B07
+- id: wv23/B08
+
+modality: optical

@@ -1,0 +1,31 @@
+task:
+  id: knn
+  is_multilabel: false
+
+  metrics:
+  - id: MulticlassAccuracy
+    top_k: 1
+    average: micro
+  - id: MulticlassAccuracy
+    top_k: 1
+    average: macro
+
+  backbone_to_features: 
+    pooling: knn
+    use_n_blocks: 1
+
+heads: 
+  nb_knn: [20]
+  temperature: 0.07
+  gather_on_cpu: false
+  n_per_class_list: [-1]
+  n_tries: 1
+
+train_dataset: null
+test_dataset: null
+seed: 42
+
+optim: 
+  dl:
+    batch_size: 256
+    num_workers: 4

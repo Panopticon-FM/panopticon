@@ -5,7 +5,7 @@
 
 from collections import defaultdict
 import logging
-
+import re
 
 logger = logging.getLogger("dinov2")
 
@@ -48,7 +48,7 @@ def get_vit_lr_decay_rate(name, lr_decay_rate=1.0, num_layers=12, force_is_backb
     return lr_decay_rate ** (num_layers + 1 - layer_id)
 
 
-def get_params_groups_with_decay(model, lr_decay_rate=1.0, patch_embed_lr_mult=1.0):
+def get_params_groups_with_decay(model, lr_decay_rate=1.0, freeze_weights='', lr_multiplier='', prefix=''):
     chunked_blocks = False
     if hasattr(model, "n_blocks"):
         logger.info("chunked fsdp")
@@ -65,31 +65,41 @@ def get_params_groups_with_decay(model, lr_decay_rate=1.0, patch_embed_lr_mult=1
         n_blocks = 0
     all_param_groups = []
 
+    def proc_str(string):
+        items = [s for s in string.split(',') if s.strip() != '']
+        return [s.split('=') for s in items]
+
+    freeze_weights = proc_str(freeze_weights)
+    lr_multiplier = proc_str(lr_multiplier)
+
     for name, param in model.named_parameters():
         name = name.replace("_fsdp_wrapped_module.", "")
+        name = prefix + '.' + name
         if not param.requires_grad:
             continue
         decay_rate = get_vit_lr_decay_rate(
             name, lr_decay_rate, num_layers=n_blocks, force_is_backbone=n_blocks > 0, chunked_blocks=chunked_blocks
         )
-        d = {"params": param, "is_last_layer": False, "lr_multiplier": decay_rate, "wd_multiplier": 1.0, "name": name}
+        d = {"params": param, 'freeze_epochs': 0, "lr_multiplier": decay_rate, "wd_multiplier": 1.0, "name": name}
 
-        if "last_layer" in name:
-            d.update({"is_last_layer": True})
+        for fw_cfg in freeze_weights:
+            if re.search(fw_cfg[0], name):
+                d.update({"freeze_epochs": int(fw_cfg[1])})
 
         if name.endswith(".bias") or "norm" in name or "gamma" in name:
             d.update({"wd_multiplier": 0.0})
 
-        if "patch_embed" in name:
-            d.update({"lr_multiplier": d["lr_multiplier"] * patch_embed_lr_mult})
+        for lr_cfg in lr_multiplier:
+            if re.search(lr_cfg[0], name):
+                d.update({"lr_multiplier": d["lr_multiplier"] * float(lr_cfg[1])})
 
         all_param_groups.append(d)
-        logger.info(f"""{name}: lr_multiplier: {d["lr_multiplier"]}, wd_multiplier: {d["wd_multiplier"]}""")
+        logger.info(f"""{name}: lr_multiplier: {d["lr_multiplier"]}, wd_multiplier: {d["wd_multiplier"]}, freeze_epochs: {d["freeze_epochs"]}""")
 
     return all_param_groups
 
 
-def fuse_params_groups(all_params_groups, keys=("lr_multiplier", "wd_multiplier", "is_last_layer")):
+def fuse_params_groups(all_params_groups, keys=("lr_multiplier", "wd_multiplier", "freeze_epochs")):
     fused_params_groups = defaultdict(lambda: {"params": []})
     for d in all_params_groups:
         identifier = ""

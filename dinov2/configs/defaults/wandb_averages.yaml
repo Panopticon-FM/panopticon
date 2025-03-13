@@ -1,0 +1,39 @@
+_rgb:
+- 5min/resisc45_knn/acc_top-1_micro
+- 5min/m-eurosat-rgb_knn/acc_top-1_micro
+
+_ms:
+- 5min/m-eurosat_knn/acc_top-1_micro
+- 5min/m-eurosat-norgb_knn/acc_top-1_micro
+
+_sar:
+- 5min/eurosat-sar_knn/acc_top-1_micro
+- 15min/sar/eurosat-sar_lin/acc_top-1_micro
+
+_sim:
+- 15min/sim/corine-4c/MulLabAvergPrec_micro
+- 15min/sim/corine-12c/MulLabAvergPrec_micro
+
+_rgb_ms: 
+- 5min/resisc45_knn/acc_top-1_micro
+- 5min/m-eurosat-rgb_knn/acc_top-1_micro
+- 5min/m-eurosat_knn/acc_top-1_micro
+- 5min/m-eurosat-norgb_knn/acc_top-1_micro
+
+_avg1: # all
+- 5min/resisc45_knn/acc_top-1_micro
+- 5min/m-eurosat-rgb_knn/acc_top-1_micro
+- 5min/m-eurosat_knn/acc_top-1_micro
+- 5min/m-eurosat-norgb_knn/acc_top-1_micro
+- 5min/eurosat-sar_knn/acc_top-1_micro
+- 15min/sar/eurosat-sar_lin/acc_top-1_micro
+- 15min/sim/corine-4c/MulLabAvergPrec_micro
+- 15min/sim/corine-12c/MulLabAvergPrec_micro
+
+_avg2: # all without hs
+- 5min/resisc45_knn/acc_top-1_micro
+- 5min/m-eurosat-rgb_knn/acc_top-1_micro
+- 5min/m-eurosat_knn/acc_top-1_micro
+- 5min/m-eurosat-norgb_knn/acc_top-1_micro
+- 5min/eurosat-sar_knn/acc_top-1_micro
+- 15min/sar/eurosat-sar_lin/acc_top-1_micro

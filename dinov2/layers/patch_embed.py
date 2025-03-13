@@ -65,8 +65,10 @@ class PatchEmbed(nn.Module):
         self.proj = nn.Conv2d(in_chans, embed_dim, kernel_size=patch_HW, stride=patch_HW)
         self.norm = norm_layer(embed_dim) if norm_layer else nn.Identity()
 
-    def forward(self, x: Tensor) -> Tensor:
+    def forward(self, x: dict) -> Tensor:
+        x = x['imgs']
         _, _, H, W = x.shape
+        h_in, w_in = H, W
         patch_H, patch_W = self.patch_size
 
         assert H % patch_H == 0, f"Input image height {H} is not a multiple of patch height {patch_H}"
@@ -78,7 +80,7 @@ class PatchEmbed(nn.Module):
         x = self.norm(x)
         if not self.flatten_embedding:
             x = x.reshape(-1, H, W, self.embed_dim)  # B H W C
-        return x
+        return x, h_in, w_in
 
     def flops(self) -> float:
         Ho, Wo = self.patches_resolution

@@ -33,7 +33,7 @@ class EpochSampler(Sampler):
         self._step = distributed.get_global_size() if step is None else step
         self._epoch = 0
 
-    def __iter__(self):
+    def _get_iterable(self):
         count = (self._size + self._sample_count - 1) // self._sample_count
         tiled_indices = np.tile(np.arange(self._sample_count), count)
         if self._shuffle:
@@ -42,7 +42,10 @@ class EpochSampler(Sampler):
             iterable = rng.choice(tiled_indices, self._size, replace=False)
         else:
             iterable = tiled_indices[: self._size]
-
+        return iterable
+        
+    def __iter__(self):
+        iterable = self._get_iterable()
         yield from itertools.islice(iterable, self._start, None, self._step)
 
     def __len__(self):

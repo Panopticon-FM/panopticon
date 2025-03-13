@@ -1,0 +1,40 @@
+bands:
+  - id: sentinel2/B01
+  - id: sentinel2/B02
+  - id: sentinel2/B03
+  - id: sentinel2/B04
+  - id: sentinel2/B05
+  - id: sentinel2/B06
+  - id: sentinel2/B07
+  - id: sentinel2/B08
+  - id: sentinel2/B8A
+  - id: sentinel2/B09
+  - id: sentinel2/B11
+  - id: sentinel2/B12
+
+task_id: segmentation
+num_classes: 7
+constant_gsd: True
+gsd: 10
+img_size: 256
+yaml: 'cashew-plantation.yaml'
+
+rgb_bands:
+  - sentinel2/B04
+  - sentinel2/B03
+  - sentinel2/B02
+
+
+band_subselect_by_geob_id:
+  - "01 - Coastal aerosol"
+  - "02 - Blue"
+  - "03 - Green"
+  - "04 - Red"
+  - "05 - Vegetation Red Edge"
+  - "06 - Vegetation Red Edge"
+  - "07 - Vegetation Red Edge"
+  - "08 - NIR"
+  - "08A - Vegetation Red Edge"
+  - "09 - Water vapour"
+  - "11 - SWIR"
+  - "12 - SWIR"

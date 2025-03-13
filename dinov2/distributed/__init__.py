@@ -11,17 +11,18 @@ from typing import Dict, List
 
 import torch
 import torch.distributed as dist
+import datetime
 
 _LOCAL_RANK = -1
 _LOCAL_WORLD_SIZE = -1
-
+_ARTIFICIALLY_BLOCK_DISTRIBUTED = False
 
 def is_enabled() -> bool:
     """
     Returns:
         True if distributed training is enabled
     """
-    return dist.is_available() and dist.is_initialized()
+    return not _ARTIFICIALLY_BLOCK_DISTRIBUTED and dist.is_available() and dist.is_initialized()
 
 
 def get_global_size() -> int:
@@ -93,7 +94,11 @@ def _get_master_port(seed: int = 0) -> int:
     master_port_str = os.environ.get("MASTER_PORT")
     if master_port_str is None:
         rng = random.Random(seed)
-        return rng.randint(MIN_MASTER_PORT, MAX_MASTER_PORT)
+        master_port_int = rng.randint(MIN_MASTER_PORT, MAX_MASTER_PORT)
+        print(f'Master port from seed {seed}: {master_port_int}')
+        return master_port_int
+    else:
+        print(f'Master port from environment: {master_port_str}')
 
     return int(master_port_str)
 
@@ -127,18 +132,25 @@ def _is_slurm_job_process() -> bool:
 
 def _parse_slurm_node_list(s: str) -> List[str]:
     nodes = []
-    # Extract "hostname", "hostname[1-2,3,4-5]," substrings
-    p = re.compile(r"(([^\[]+)(?:\[([^\]]+)\])?),?")
-    for m in p.finditer(s):
-        prefix, suffixes = s[m.start(2) : m.end(2)], s[m.start(3) : m.end(3)]
-        for suffix in suffixes.split(","):
-            span = suffix.split("-")
-            if len(span) == 1:
-                nodes.append(prefix + suffix)
-            else:
-                width = len(span[0])
-                start, end = int(span[0]), int(span[1]) + 1
-                nodes.extend([prefix + f"{i:0{width}}" for i in range(start, end)])
+
+    if 'savio' in s:
+        nodes = os.environ["SLURM_JOB_NODELIST"].split(',') # configuration on savio
+
+    else:
+
+        # Extract "hostname", "hostname[1-2,3,4-5]," substrings
+        p = re.compile(r"(([^\[]+)(?:\[([^\]]+)\])?),?")
+        for m in p.finditer(s):
+            prefix, suffixes = s[m.start(2) : m.end(2)], s[m.start(3) : m.end(3)]
+            for suffix in suffixes.split(","):
+                span = suffix.split("-")
+                if len(span) == 1:
+                    nodes.append(prefix + suffix)
+                else:
+                    width = len(span[0])
+                    start, end = int(span[0]), int(span[1]) + 1
+                    nodes.extend([prefix + f"{i:0{width}}" for i in range(start, end)])
+
     return nodes
 
 
@@ -181,6 +193,7 @@ class _TorchDistributedEnvironment:
     def _set_from_slurm_env(self):
         # logger.info("Initialization from Slurm environment")
         job_id = int(os.environ["SLURM_JOB_ID"])
+        print(f"Initialization from Slurm environment (job_id={job_id})")
         node_count = int(os.environ["SLURM_JOB_NUM_NODES"])
         nodes = _parse_slurm_node_list(os.environ["SLURM_JOB_NODELIST"])
         assert len(nodes) == node_count
@@ -197,6 +210,7 @@ class _TorchDistributedEnvironment:
     # Single node job with preset environment (i.e. torchrun)
     def _set_from_preset_env(self):
         # logger.info("Initialization from preset environment")
+        print("Initialization from preset environment")
         self.master_addr = os.environ["MASTER_ADDR"]
         self.master_port = os.environ["MASTER_PORT"]
         self.rank = int(os.environ["RANK"])
@@ -209,6 +223,7 @@ class _TorchDistributedEnvironment:
     # Single node and GPU job (i.e. local script run)
     def _set_from_local(self):
         # logger.info("Initialization from local")
+        print('Initialization from local')
         self.master_addr = "127.0.0.1"
         self.master_port = _get_available_port()
         self.rank = 0
@@ -233,10 +248,12 @@ class _TorchDistributedEnvironment:
                 _check_env_variable(k, v)
 
         os.environ.update(env_vars)
+        p = {k: os.environ[k] for k in env_vars.keys()}
+        print('env vars ', p)
         return self
 
 
-def enable(*, set_cuda_current_device: bool = True, overwrite: bool = False, allow_nccl_timeout: bool = False):
+def enable(*, set_cuda_current_device: bool = True, overwrite: bool = False, allow_nccl_timeout: bool = False, restart=False):
     """Enable distributed mode
 
     Args:
@@ -245,8 +262,8 @@ def enable(*, set_cuda_current_device: bool = True, overwrite: bool = False, all
         overwrite: If True, overwrites already set variables. Else fails.
     """
 
-    global _LOCAL_RANK, _LOCAL_WORLD_SIZE
-    if _LOCAL_RANK >= 0 or _LOCAL_WORLD_SIZE >= 0:
+    global _LOCAL_RANK, _LOCAL_WORLD_SIZE, _ARTIFICIALLY_BLOCK_DISTRIBUTED
+    if not restart and (_LOCAL_RANK >= 0 or _LOCAL_WORLD_SIZE >= 0):
         raise RuntimeError("Distributed mode has already been enabled")
     torch_env = _TorchDistributedEnvironment()
     torch_env.export(overwrite=overwrite)
@@ -261,7 +278,8 @@ def enable(*, set_cuda_current_device: bool = True, overwrite: bool = False, all
             _check_env_variable(key, value)
         os.environ[key] = value
 
-    dist.init_process_group(backend="nccl")
+    dist.init_process_group(backend="nccl", timeout=datetime.timedelta(seconds=120))
+    print(f'Initialized torch.distributed: rank={get_global_rank()}, world_size={get_global_size()}')
     dist.barrier()
 
     # Finalize setup

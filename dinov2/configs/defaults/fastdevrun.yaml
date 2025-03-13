@@ -1,0 +1,48 @@
+# overwrites are applied if fastdevrun flag is true
+
+train:
+  batch_size_per_gpu: 2
+  num_workers: 1
+  OFFICIAL_EPOCH_LENGTH: 10
+  use_wandb: False
+
+optim:
+  epochs: 1
+  saveckp_freq: 100
+  warmup_epochs: 0
+
+
+_eval_overwrites:
+  train_dataset:
+    subset: 20
+
+  val_dataset: 
+    subset: 20
+
+  optim:
+    epochs: 1
+
+  dl:
+    batch_size: 20
+    num_workers: 4
+
+
+eval:
+
+  only_eval: False # skip training and only do evaluation
+  skip: False # skip all evaluation regardless of other arguments
+
+  # eval for ckpts generated during training
+
+  config_obj: ${env:CDIR}/eval/5min/m-eurosat_knn.yaml
+  overwrites: ${_eval_overwrites} 
+
+  eval_period_epoch: 1000
+  eval_period_iterations: -1
+  include_final_ckpt: True 
+
+  # Eval executed once for final model
+
+  final_model: 
+    config_obj: ${env:CDIR}/eval/5min/m-eurosat_knn.yaml
+    overwrites: ${_eval_overwrites}

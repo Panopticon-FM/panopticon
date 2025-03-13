@@ -13,7 +13,12 @@ def load_config(config_name: str):
     return OmegaConf.load(pathlib.Path(__file__).parent.resolve() / config_filename)
 
 
-dinov2_default_config = load_config("ssl_default_config")
+dinov2_default_config = load_config("defaults/pretrain_default")
+dinov2_debug_config = load_config("defaults/fastdevrun")
+
+default_eval_linear_config = load_config('defaults/default_eval_linear')
+default_eval_linear_multilabel_config = load_config('defaults/default_eval_linear_multilabel')
+default_eval_knn_config = load_config('defaults/default_eval_knn')
 
 
 def load_and_merge_config(config_name: str):

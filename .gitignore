@@ -9,3 +9,10 @@ dist/
 *.swp
 
 .vscode/
+**/lightning_logs/**
+
+.env
+
+sinfo.csv
+squeue.csv
+*/tmp.ipynb

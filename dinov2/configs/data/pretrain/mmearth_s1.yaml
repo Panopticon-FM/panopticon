@@ -1,0 +1,11 @@
+bands:
+  - id: sentinel1/B05
+  - id: sentinel1/B06
+  - id: sentinel1/B07
+  - id: sentinel1/B08
+  - id: sentinel1/B09
+  - id: sentinel1/B10
+  - id: sentinel1/B11
+  - id: sentinel1/B12
+
+modality: sar

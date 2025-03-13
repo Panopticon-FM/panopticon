@@ -17,8 +17,8 @@ import torch.nn as nn
 import torch.utils.checkpoint
 from torch.nn.init import trunc_normal_
 
+from dinov2.models.panopticon import PanopticonPE
 from dinov2.layers import Mlp, PatchEmbed, SwiGLUFFNFused, MemEffAttention, NestedTensorBlock as Block
-
 
 logger = logging.getLogger("dinov2")
 
@@ -57,7 +57,7 @@ class DinoVisionTransformer(nn.Module):
         drop_path_rate=0.0,
         drop_path_uniform=False,
         init_values=None,  # for layerscale: None or 0 => no layerscale
-        embed_layer=PatchEmbed,
+        embed_layer='PatchEmbed',
         act_layer=nn.GELU,
         block_fn=Block,
         ffn_layer="mlp",
@@ -65,6 +65,7 @@ class DinoVisionTransformer(nn.Module):
         num_register_tokens=0,
         interpolate_antialias=False,
         interpolate_offset=0.1,
+        pe_args={},
     ):
         """
         Args:
@@ -82,7 +83,7 @@ class DinoVisionTransformer(nn.Module):
             drop_path_uniform (bool): apply uniform drop rate across blocks
             weight_init (str): weight init scheme
             init_values (float): layer-scale init values
-            embed_layer (nn.Module): patch embedding layer
+            embed_layer (str): patch embedding layer
             act_layer (nn.Module): MLP activation layer
             block_fn (nn.Module): transformer block class
             ffn_layer (str): "mlp", "swiglu", "swiglufused" or "identity"
@@ -103,16 +104,7 @@ class DinoVisionTransformer(nn.Module):
         self.interpolate_antialias = interpolate_antialias
         self.interpolate_offset = interpolate_offset
 
-        self.patch_embed = embed_layer(img_size=img_size, patch_size=patch_size, in_chans=in_chans, embed_dim=embed_dim)
-        num_patches = self.patch_embed.num_patches
-
-        self.cls_token = nn.Parameter(torch.zeros(1, 1, embed_dim))
-        self.pos_embed = nn.Parameter(torch.zeros(1, num_patches + self.num_tokens, embed_dim))
-        assert num_register_tokens >= 0
-        self.register_tokens = (
-            nn.Parameter(torch.zeros(1, num_register_tokens, embed_dim)) if num_register_tokens else None
-        )
-
+        # parse
         if drop_path_uniform is True:
             dpr = [drop_path_rate] * depth
         else:
@@ -133,6 +125,33 @@ class DinoVisionTransformer(nn.Module):
             ffn_layer = f
         else:
             raise NotImplementedError
+
+        # embedding layer
+        logger.info(f"Embedding layer: {embed_layer}")
+        if embed_layer == 'PatchEmbed': # standard conv2d patch embed
+            if len(pe_args) > 0:
+                logger.warning(f"Ignoring additional arguments for PatchEmbed: {pe_args}")
+            self.patch_embed = PatchEmbed(img_size=img_size, patch_size=patch_size, in_chans=in_chans, embed_dim=embed_dim)
+            num_patches = self.patch_embed.num_patches
+
+        elif embed_layer == 'PanopticonPE':
+            num_patches = PatchEmbed(img_size, patch_size).num_patches
+            attn_dim = pe_args.pop('attn_dim', embed_dim)
+            self.patch_embed = PanopticonPE(
+                attn_dim = attn_dim, 
+                embed_dim = embed_dim,
+                patch_size = patch_size,
+                **pe_args)
+
+        else:
+            raise ValueError(f"Unknown embed_layer: {embed_layer}")
+
+        self.cls_token = nn.Parameter(torch.zeros(1, 1, embed_dim))
+        self.pos_embed = nn.Parameter(torch.zeros(1, num_patches + self.num_tokens, embed_dim))
+        assert num_register_tokens >= 0
+        self.register_tokens = (
+            nn.Parameter(torch.zeros(1, num_register_tokens, embed_dim)) if num_register_tokens else None
+        )
 
         blocks_list = [
             block_fn(
@@ -211,8 +230,7 @@ class DinoVisionTransformer(nn.Module):
         return torch.cat((class_pos_embed.unsqueeze(0), patch_pos_embed), dim=1).to(previous_dtype)
 
     def prepare_tokens_with_masks(self, x, masks=None):
-        B, nc, w, h = x.shape
-        x = self.patch_embed(x)
+        x, h, w = self.patch_embed(x)
         if masks is not None:
             x = torch.where(masks.unsqueeze(-1), self.mask_token.to(x.dtype).unsqueeze(0), x)
 

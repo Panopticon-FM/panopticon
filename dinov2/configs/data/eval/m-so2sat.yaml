@@ -1,0 +1,27 @@
+task_id: classification
+num_classes: 17
+gsd: 10
+img_size: 32
+
+bands:
+# sentinel1
+- id: sentinel1/B02
+- id: sentinel1/B02
+- id: sentinel1/B01
+- id: sentinel1/B01
+- id: sentinel1/B02
+- id: sentinel1/B01
+- id: sentinel1/B07
+- id: sentinel1/B08
+
+# sentinel2
+- id: sentinel2/B02
+- id: sentinel2/B03
+- id: sentinel2/B04
+- id: sentinel2/B05
+- id: sentinel2/B06
+- id: sentinel2/B07
+- id: sentinel2/B08
+- id: sentinel2/B8A
+- id: sentinel2/B11
+- id: sentinel2/B12

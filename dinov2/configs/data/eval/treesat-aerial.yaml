@@ -1,0 +1,11 @@
+task_id: multilabelclass
+num_classes: 15
+gsd: 0.2
+img_size: 304
+bands:
+- id: drone/B01
+- id: drone/B02
+- id: drone/B03
+- id: drone/B04
+
+modality: optical #sar, dem, lc

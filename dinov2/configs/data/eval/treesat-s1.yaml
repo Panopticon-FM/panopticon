@@ -1,0 +1,7 @@
+task_id: multilabelclass
+num_classes: 43
+gsd: 10.
+img_size: 6
+bands:
+- id: sentinel1/B01
+- id: sentinel1/B02

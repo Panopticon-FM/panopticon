@@ -5,19 +5,40 @@
 
 import torch
 import random
+import numpy as np
 
 
-def collate_data_and_cast(samples_list, mask_ratio_tuple, mask_probability, dtype, n_tokens=None, mask_generator=None):
-    # dtype = torch.half  # TODO: Remove
+def collate_data_and_cast(samples_list, 
+                          mask_ratio_tuple, 
+                          mask_probability, 
+                          dtype, 
+                          n_tokens=None, 
+                          mask_generator=None,
+                        #   global_smask_absolute_tuple = None,
+                        #   local_smask_absolute_tuple = None
+    ):
+    # collate dataset output
 
-    n_global_crops = len(samples_list[0][0]["global_crops"])
-    n_local_crops = len(samples_list[0][0]["local_crops"])
+    n_global_crops = len(samples_list[0]["global_crops"])
+    n_local_crops = len(samples_list[0]["local_crops"])
 
-    collated_global_crops = torch.stack([s[0]["global_crops"][i] for i in range(n_global_crops) for s in samples_list])
+    def coll(inp_key, ncrops):
+        collated = {}
+        keys = [k for k,v in samples_list[0][inp_key][0].items() if isinstance(v, torch.Tensor)]
+        for k in keys:
+            collated[k] = torch.stack([s[inp_key][i][k] for i in range(ncrops) for s in samples_list])
+            if k == 'imgs':
+                collated[k] = collated[k].to(dtype=dtype)
+        if 'pe_id' in samples_list[0]:
+            collated['pe_id'] = samples_list[0]['pe_id']
+        return collated
+    
+    collated_global_crops = coll("global_crops", n_global_crops)
+    collated_local_crops = coll("local_crops", n_local_crops)
 
-    collated_local_crops = torch.stack([s[0]["local_crops"][i] for i in range(n_local_crops) for s in samples_list])
+    # create spatial masks
 
-    B = len(collated_global_crops)
+    B = len(collated_global_crops['imgs'])
     N = n_tokens
     n_samples_masked = int(B * mask_probability)
     probs = torch.linspace(*mask_ratio_tuple, n_samples_masked + 1)
@@ -39,8 +60,8 @@ def collate_data_and_cast(samples_list, mask_ratio_tuple, mask_probability, dtyp
     masks_weight = (1 / collated_masks.sum(-1).clamp(min=1.0)).unsqueeze(-1).expand_as(collated_masks)[collated_masks]
 
     return {
-        "collated_global_crops": collated_global_crops.to(dtype),
-        "collated_local_crops": collated_local_crops.to(dtype),
+        "collated_global_crops": collated_global_crops,
+        "collated_local_crops": collated_local_crops,
         "collated_masks": collated_masks,
         "mask_indices_list": mask_indices_list,
         "masks_weight": masks_weight,

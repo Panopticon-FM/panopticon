@@ -1,0 +1,20 @@
+bands:
+  - id: sentinel2/B04
+    img_size: 512
+  - id: sentinel2/B03
+    img_size: 512
+  - id: sentinel2/B02
+    img_size: 512
+  - id: sentinel2/B05
+    img_size: 512
+  - id: sentinel2/B06
+    img_size: 512
+  - id: sentinel2/B07
+    img_size: 512
+  - id: sentinel2/B08
+    img_size: 512
+  - id: sentinel2/B11
+    img_size: 512
+  - id: sentinel2/B12
+    img_size: 512
+

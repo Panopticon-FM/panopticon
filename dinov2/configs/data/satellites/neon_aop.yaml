@@ -1,0 +1,2146 @@
+bands:
+# rgb
+  red: # value copied from sentinel2, might be slightly off
+    gaussian:
+      mu: 664.618391
+      sigma: 20.796697
+  green: # value copied from sentinel2, might be slightly off
+    gaussian:
+      mu: 559.855608
+      sigma: 23.150964
+  blue: # value copied from sentinel2, might be slightly off
+    gaussian:
+      mu: 492.714637
+      sigma: 42.527215
+
+# hyperspectral (geobench uses first 369)
+  B000:
+    gaussian:
+      mu: 382.67
+      sigma: 4.0
+    gsd: 1.0
+  B001:
+    gaussian:
+      mu: 387.68
+      sigma: 4.0
+    gsd: 1.0
+  B002:
+    gaussian:
+      mu: 392.68
+      sigma: 4.0
+    gsd: 1.0
+  B003:
+    gaussian:
+      mu: 397.70
+      sigma: 4.0
+    gsd: 1.0
+  B004:
+    gaussian:
+      mu: 402.70
+      sigma: 4.0
+    gsd: 1.0
+  B005:
+    gaussian:
+      mu: 407.71
+      sigma: 4.0
+    gsd: 1.0
+  B006:
+    gaussian:
+      mu: 412.72
+      sigma: 4.0
+    gsd: 1.0
+  B007:
+    gaussian:
+      mu: 417.73
+      sigma: 4.0
+    gsd: 1.0
+  B008:
+    gaussian:
+      mu: 422.74
+      sigma: 4.0
+    gsd: 1.0
+  B009:
+    gaussian:
+      mu: 427.75
+      sigma: 4.0
+    gsd: 1.0
+  B010:
+    gaussian:
+      mu: 432.76
+      sigma: 4.0
+    gsd: 1.0
+  B011:
+    gaussian:
+      mu: 437.77
+      sigma: 4.0
+    gsd: 1.0
+  B012:
+    gaussian:
+      mu: 442.78
+      sigma: 4.0
+    gsd: 1.0
+  B013:
+    gaussian:
+      mu: 447.79
+      sigma: 4.0
+    gsd: 1.0
+  B014:
+    gaussian:
+      mu: 452.80
+      sigma: 4.0
+    gsd: 1.0
+  B015:
+    gaussian:
+      mu: 457.81
+      sigma: 4.0
+    gsd: 1.0
+  B016:
+    gaussian:
+      mu: 462.82
+      sigma: 4.0
+    gsd: 1.0
+  B017:
+    gaussian:
+      mu: 467.83
+      sigma: 4.0
+    gsd: 1.0
+  B018:
+    gaussian:
+      mu: 472.84
+      sigma: 4.0
+    gsd: 1.0
+  B019:
+    gaussian:
+      mu: 477.85
+      sigma: 4.0
+    gsd: 1.0
+  B020:
+    gaussian:
+      mu: 482.86
+      sigma: 4.0
+    gsd: 1.0
+  B021:
+    gaussian:
+      mu: 487.87
+      sigma: 4.0
+    gsd: 1.0
+  B022:
+    gaussian:
+      mu: 492.88
+      sigma: 4.0
+    gsd: 1.0
+  B023:
+    gaussian:
+      mu: 497.88
+      sigma: 4.0
+    gsd: 1.0
+  B024:
+    gaussian:
+      mu: 502.89
+      sigma: 4.0
+    gsd: 1.0
+  B025:
+    gaussian:
+      mu: 507.90
+      sigma: 4.0
+    gsd: 1.0
+  B026:
+    gaussian:
+      mu: 512.91
+      sigma: 4.0
+    gsd: 1.0
+  B027:
+    gaussian:
+      mu: 517.92
+      sigma: 4.0
+    gsd: 1.0
+  B028:
+    gaussian:
+      mu: 522.93
+      sigma: 4.0
+    gsd: 1.0
+  B029:
+    gaussian:
+      mu: 527.94
+      sigma: 4.0
+    gsd: 1.0
+  B030:
+    gaussian:
+      mu: 532.95
+      sigma: 4.0
+    gsd: 1.0
+  B031:
+    gaussian:
+      mu: 537.96
+      sigma: 4.0
+    gsd: 1.0
+  B032:
+    gaussian:
+      mu: 542.97
+      sigma: 4.0
+    gsd: 1.0
+  B033:
+    gaussian:
+      mu: 547.98
+      sigma: 4.0
+    gsd: 1.0
+  B034:
+    gaussian:
+      mu: 552.99
+      sigma: 4.0
+    gsd: 1.0
+  B035:
+    gaussian:
+      mu: 558.00
+      sigma: 4.0
+    gsd: 1.0
+  B036:
+    gaussian:
+      mu: 563.01
+      sigma: 4.0
+    gsd: 1.0
+  B037:
+    gaussian:
+      mu: 568.02
+      sigma: 4.0
+    gsd: 1.0
+  B038:
+    gaussian:
+      mu: 573.03
+      sigma: 4.0
+    gsd: 1.0
+  B039:
+    gaussian:
+      mu: 578.04
+      sigma: 4.0
+    gsd: 1.0
+  B040:
+    gaussian:
+      mu: 583.05
+      sigma: 4.0
+    gsd: 1.0
+  B041:
+    gaussian:
+      mu: 588.06
+      sigma: 4.0
+    gsd: 1.0
+  B042:
+    gaussian:
+      mu: 593.07
+      sigma: 4.0
+    gsd: 1.0
+  B043:
+    gaussian:
+      mu: 598.07
+      sigma: 4.0
+    gsd: 1.0
+  B044:
+    gaussian:
+      mu: 603.08
+      sigma: 4.0
+    gsd: 1.0
+  B045:
+    gaussian:
+      mu: 608.09
+      sigma: 4.0
+    gsd: 1.0
+  B046:
+    gaussian:
+      mu: 613.10
+      sigma: 4.0
+    gsd: 1.0
+  B047:
+    gaussian:
+      mu: 618.11
+      sigma: 4.0
+    gsd: 1.0
+  B048:
+    gaussian:
+      mu: 623.12
+      sigma: 4.0
+    gsd: 1.0
+  B049:
+    gaussian:
+      mu: 628.13
+      sigma: 4.0
+    gsd: 1.0
+  B050:
+    gaussian:
+      mu: 633.14
+      sigma: 4.0
+    gsd: 1.0
+  B051:
+    gaussian:
+      mu: 638.15
+      sigma: 4.0
+    gsd: 1.0
+  B052:
+    gaussian:
+      mu: 643.16
+      sigma: 4.0
+    gsd: 1.0
+  B053:
+    gaussian:
+      mu: 648.17
+      sigma: 4.0
+    gsd: 1.0
+  B054:
+    gaussian:
+      mu: 653.18
+      sigma: 4.0
+    gsd: 1.0
+  B055:
+    gaussian:
+      mu: 658.19
+      sigma: 4.0
+    gsd: 1.0
+  B056:
+    gaussian:
+      mu: 663.20
+      sigma: 4.0
+    gsd: 1.0
+  B057:
+    gaussian:
+      mu: 668.21
+      sigma: 4.0
+    gsd: 1.0
+  B058:
+    gaussian:
+      mu: 673.22
+      sigma: 4.0
+    gsd: 1.0
+  B059:
+    gaussian:
+      mu: 678.23
+      sigma: 4.0
+    gsd: 1.0
+  B060:
+    gaussian:
+      mu: 683.24
+      sigma: 4.0
+    gsd: 1.0
+  B061:
+    gaussian:
+      mu: 688.25
+      sigma: 4.0
+    gsd: 1.0
+  B062:
+    gaussian:
+      mu: 693.26
+      sigma: 4.0
+    gsd: 1.0
+  B063:
+    gaussian:
+      mu: 698.27
+      sigma: 4.0
+    gsd: 1.0
+  B064:
+    gaussian:
+      mu: 703.28
+      sigma: 4.0
+    gsd: 1.0
+  B065:
+    gaussian:
+      mu: 708.28
+      sigma: 4.0
+    gsd: 1.0
+  B066:
+    gaussian:
+      mu: 713.29
+      sigma: 4.0
+    gsd: 1.0
+  B067:
+    gaussian:
+      mu: 718.30
+      sigma: 4.0
+    gsd: 1.0
+  B068:
+    gaussian:
+      mu: 723.31
+      sigma: 4.0
+    gsd: 1.0
+  B069:
+    gaussian:
+      mu: 728.32
+      sigma: 4.0
+    gsd: 1.0
+  B070:
+    gaussian:
+      mu: 733.33
+      sigma: 4.0
+    gsd: 1.0
+  B071:
+    gaussian:
+      mu: 738.34
+      sigma: 4.0
+    gsd: 1.0
+  B072:
+    gaussian:
+      mu: 743.35
+      sigma: 4.0
+    gsd: 1.0
+  B073:
+    gaussian:
+      mu: 748.36
+      sigma: 4.0
+    gsd: 1.0
+  B074:
+    gaussian:
+      mu: 753.37
+      sigma: 4.0
+    gsd: 1.0
+  B075:
+    gaussian:
+      mu: 758.38
+      sigma: 4.0
+    gsd: 1.0
+  B076:
+    gaussian:
+      mu: 763.39
+      sigma: 4.0
+    gsd: 1.0
+  B077:
+    gaussian:
+      mu: 768.40
+      sigma: 4.0
+    gsd: 1.0
+  B078:
+    gaussian:
+      mu: 773.41
+      sigma: 4.0
+    gsd: 1.0
+  B079:
+    gaussian:
+      mu: 778.42
+      sigma: 4.0
+    gsd: 1.0
+  B080:
+    gaussian:
+      mu: 783.43
+      sigma: 4.0
+    gsd: 1.0
+  B081:
+    gaussian:
+      mu: 788.44
+      sigma: 4.0
+    gsd: 1.0
+  B082:
+    gaussian:
+      mu: 793.45
+      sigma: 4.0
+    gsd: 1.0
+  B083:
+    gaussian:
+      mu: 798.46
+      sigma: 4.0
+    gsd: 1.0
+  B084:
+    gaussian:
+      mu: 803.47
+      sigma: 4.0
+    gsd: 1.0
+  B085:
+    gaussian:
+      mu: 808.48
+      sigma: 4.0
+    gsd: 1.0
+  B086:
+    gaussian:
+      mu: 813.49
+      sigma: 4.0
+    gsd: 1.0
+  B087:
+    gaussian:
+      mu: 818.49
+      sigma: 4.0
+    gsd: 1.0
+  B088:
+    gaussian:
+      mu: 823.50
+      sigma: 4.0
+    gsd: 1.0
+  B089:
+    gaussian:
+      mu: 828.51
+      sigma: 4.0
+    gsd: 1.0
+  B090:
+    gaussian:
+      mu: 833.52
+      sigma: 4.0
+    gsd: 1.0
+  B091:
+    gaussian:
+      mu: 838.53
+      sigma: 4.0
+    gsd: 1.0
+  B092:
+    gaussian:
+      mu: 843.54
+      sigma: 4.0
+    gsd: 1.0
+  B093:
+    gaussian:
+      mu: 848.55
+      sigma: 4.0
+    gsd: 1.0
+  B094:
+    gaussian:
+      mu: 853.56
+      sigma: 4.0
+    gsd: 1.0
+  B095:
+    gaussian:
+      mu: 858.57
+      sigma: 4.0
+    gsd: 1.0
+  B096:
+    gaussian:
+      mu: 863.58
+      sigma: 4.0
+    gsd: 1.0
+  B097:
+    gaussian:
+      mu: 868.59
+      sigma: 4.0
+    gsd: 1.0
+  B098:
+    gaussian:
+      mu: 873.60
+      sigma: 4.0
+    gsd: 1.0
+  B099:
+    gaussian:
+      mu: 878.61
+      sigma: 4.0
+    gsd: 1.0
+  B100:
+    gaussian:
+      mu: 883.62
+      sigma: 4.0
+    gsd: 1.0
+  B101:
+    gaussian:
+      mu: 888.63
+      sigma: 4.0
+    gsd: 1.0
+  B102:
+    gaussian:
+      mu: 893.64
+      sigma: 4.0
+    gsd: 1.0
+  B103:
+    gaussian:
+      mu: 898.65
+      sigma: 4.0
+    gsd: 1.0
+  B104:
+    gaussian:
+      mu: 903.66
+      sigma: 4.0
+    gsd: 1.0
+  B105:
+    gaussian:
+      mu: 908.67
+      sigma: 4.0
+    gsd: 1.0
+  B106:
+    gaussian:
+      mu: 913.68
+      sigma: 4.0
+    gsd: 1.0
+  B107:
+    gaussian:
+      mu: 918.68
+      sigma: 4.0
+    gsd: 1.0
+  B108:
+    gaussian:
+      mu: 923.69
+      sigma: 4.0
+    gsd: 1.0
+  B109:
+    gaussian:
+      mu: 928.70
+      sigma: 4.0
+    gsd: 1.0
+  B110:
+    gaussian:
+      mu: 933.71
+      sigma: 4.0
+    gsd: 1.0
+  B111:
+    gaussian:
+      mu: 938.72
+      sigma: 4.0
+    gsd: 1.0
+  B112:
+    gaussian:
+      mu: 943.73
+      sigma: 4.0
+    gsd: 1.0
+  B113:
+    gaussian:
+      mu: 948.74
+      sigma: 4.0
+    gsd: 1.0
+  B114:
+    gaussian:
+      mu: 953.75
+      sigma: 4.0
+    gsd: 1.0
+  B115:
+    gaussian:
+      mu: 958.76
+      sigma: 4.0
+    gsd: 1.0
+  B116:
+    gaussian:
+      mu: 963.77
+      sigma: 4.0
+    gsd: 1.0
+  B117:
+    gaussian:
+      mu: 968.78
+      sigma: 4.0
+    gsd: 1.0
+  B118:
+    gaussian:
+      mu: 973.79
+      sigma: 4.0
+    gsd: 1.0
+  B119:
+    gaussian:
+      mu: 978.80
+      sigma: 4.0
+    gsd: 1.0
+  B120:
+    gaussian:
+      mu: 983.81
+      sigma: 4.0
+    gsd: 1.0
+  B121:
+    gaussian:
+      mu: 988.82
+      sigma: 4.0
+    gsd: 1.0
+  B122:
+    gaussian:
+      mu: 993.83
+      sigma: 4.0
+    gsd: 1.0
+  B123:
+    gaussian:
+      mu: 998.84
+      sigma: 4.0
+    gsd: 1.0
+  B124:
+    gaussian:
+      mu: 1003.85
+      sigma: 4.0
+    gsd: 1.0
+  B125:
+    gaussian:
+      mu: 1008.86
+      sigma: 4.0
+    gsd: 1.0
+  B126:
+    gaussian:
+      mu: 1013.86
+      sigma: 4.0
+    gsd: 1.0
+  B127:
+    gaussian:
+      mu: 1018.87
+      sigma: 4.0
+    gsd: 1.0
+  B128:
+    gaussian:
+      mu: 1023.88
+      sigma: 4.0
+    gsd: 1.0
+  B129:
+    gaussian:
+      mu: 1028.89
+      sigma: 4.0
+    gsd: 1.0
+  B130:
+    gaussian:
+      mu: 1033.90
+      sigma: 4.0
+    gsd: 1.0
+  B131:
+    gaussian:
+      mu: 1038.91
+      sigma: 4.0
+    gsd: 1.0
+  B132:
+    gaussian:
+      mu: 1043.92
+      sigma: 4.0
+    gsd: 1.0
+  B133:
+    gaussian:
+      mu: 1048.93
+      sigma: 4.0
+    gsd: 1.0
+  B134:
+    gaussian:
+      mu: 1053.94
+      sigma: 4.0
+    gsd: 1.0
+  B135:
+    gaussian:
+      mu: 1058.95
+      sigma: 4.0
+    gsd: 1.0
+  B136:
+    gaussian:
+      mu: 1063.96
+      sigma: 4.0
+    gsd: 1.0
+  B137:
+    gaussian:
+      mu: 1068.97
+      sigma: 4.0
+    gsd: 1.0
+  B138:
+    gaussian:
+      mu: 1073.98
+      sigma: 4.0
+    gsd: 1.0
+  B139:
+    gaussian:
+      mu: 1078.99
+      sigma: 4.0
+    gsd: 1.0
+  B140:
+    gaussian:
+      mu: 1084.00
+      sigma: 4.0
+    gsd: 1.0
+  B141:
+    gaussian:
+      mu: 1089.01
+      sigma: 4.0
+    gsd: 1.0
+  B142:
+    gaussian:
+      mu: 1094.02
+      sigma: 4.0
+    gsd: 1.0
+  B143:
+    gaussian:
+      mu: 1099.03
+      sigma: 4.0
+    gsd: 1.0
+  B144:
+    gaussian:
+      mu: 1104.04
+      sigma: 4.0
+    gsd: 1.0
+  B145:
+    gaussian:
+      mu: 1109.05
+      sigma: 4.0
+    gsd: 1.0
+  B146:
+    gaussian:
+      mu: 1114.06
+      sigma: 4.0
+    gsd: 1.0
+  B147:
+    gaussian:
+      mu: 1119.06
+      sigma: 4.0
+    gsd: 1.0
+  B148:
+    gaussian:
+      mu: 1124.07
+      sigma: 4.0
+    gsd: 1.0
+  B149:
+    gaussian:
+      mu: 1129.08
+      sigma: 4.0
+    gsd: 1.0
+  B150:
+    gaussian:
+      mu: 1134.09
+      sigma: 4.0
+    gsd: 1.0
+  B151:
+    gaussian:
+      mu: 1139.10
+      sigma: 4.0
+    gsd: 1.0
+  B152:
+    gaussian:
+      mu: 1144.11
+      sigma: 4.0
+    gsd: 1.0
+  B153:
+    gaussian:
+      mu: 1149.12
+      sigma: 4.0
+    gsd: 1.0
+  B154:
+    gaussian:
+      mu: 1154.13
+      sigma: 4.0
+    gsd: 1.0
+  B155:
+    gaussian:
+      mu: 1159.14
+      sigma: 4.0
+    gsd: 1.0
+  B156:
+    gaussian:
+      mu: 1164.15
+      sigma: 4.0
+    gsd: 1.0
+  B157:
+    gaussian:
+      mu: 1169.16
+      sigma: 4.0
+    gsd: 1.0
+  B158:
+    gaussian:
+      mu: 1174.17
+      sigma: 4.0
+    gsd: 1.0
+  B159:
+    gaussian:
+      mu: 1179.18
+      sigma: 4.0
+    gsd: 1.0
+  B160:
+    gaussian:
+      mu: 1184.19
+      sigma: 4.0
+    gsd: 1.0
+  B161:
+    gaussian:
+      mu: 1189.20
+      sigma: 4.0
+    gsd: 1.0
+  B162:
+    gaussian:
+      mu: 1194.21
+      sigma: 4.0
+    gsd: 1.0
+  B163:
+    gaussian:
+      mu: 1199.22
+      sigma: 4.0
+    gsd: 1.0
+  B164:
+    gaussian:
+      mu: 1204.23
+      sigma: 4.0
+    gsd: 1.0
+  B165:
+    gaussian:
+      mu: 1209.24
+      sigma: 4.0
+    gsd: 1.0
+  B166:
+    gaussian:
+      mu: 1214.25
+      sigma: 4.0
+    gsd: 1.0
+  B167:
+    gaussian:
+      mu: 1219.26
+      sigma: 4.0
+    gsd: 1.0
+  B168:
+    gaussian:
+      mu: 1224.26
+      sigma: 4.0
+    gsd: 1.0
+  B169:
+    gaussian:
+      mu: 1229.27
+      sigma: 4.0
+    gsd: 1.0
+  B170:
+    gaussian:
+      mu: 1234.28
+      sigma: 4.0
+    gsd: 1.0
+  B171:
+    gaussian:
+      mu: 1239.29
+      sigma: 4.0
+    gsd: 1.0
+  B172:
+    gaussian:
+      mu: 1244.30
+      sigma: 4.0
+    gsd: 1.0
+  B173:
+    gaussian:
+      mu: 1249.31
+      sigma: 4.0
+    gsd: 1.0
+  B174:
+    gaussian:
+      mu: 1254.32
+      sigma: 4.0
+    gsd: 1.0
+  B175:
+    gaussian:
+      mu: 1259.33
+      sigma: 4.0
+    gsd: 1.0
+  B176:
+    gaussian:
+      mu: 1264.34
+      sigma: 4.0
+    gsd: 1.0
+  B177:
+    gaussian:
+      mu: 1269.35
+      sigma: 4.0
+    gsd: 1.0
+  B178:
+    gaussian:
+      mu: 1274.36
+      sigma: 4.0
+    gsd: 1.0
+  B179:
+    gaussian:
+      mu: 1279.37
+      sigma: 4.0
+    gsd: 1.0
+  B180:
+    gaussian:
+      mu: 1284.38
+      sigma: 4.0
+    gsd: 1.0
+  B181:
+    gaussian:
+      mu: 1289.39
+      sigma: 4.0
+    gsd: 1.0
+  B182:
+    gaussian:
+      mu: 1294.40
+      sigma: 4.0
+    gsd: 1.0
+  B183:
+    gaussian:
+      mu: 1299.41
+      sigma: 4.0
+    gsd: 1.0
+  B184:
+    gaussian:
+      mu: 1304.42
+      sigma: 4.0
+    gsd: 1.0
+  B185:
+    gaussian:
+      mu: 1309.43
+      sigma: 4.0
+    gsd: 1.0
+  B186:
+    gaussian:
+      mu: 1314.44
+      sigma: 4.0
+    gsd: 1.0
+  B187:
+    gaussian:
+      mu: 1319.45
+      sigma: 4.0
+    gsd: 1.0
+  B188:
+    gaussian:
+      mu: 1324.45
+      sigma: 4.0
+    gsd: 1.0
+  B189:
+    gaussian:
+      mu: 1329.46
+      sigma: 4.0
+    gsd: 1.0
+  B190:
+    gaussian:
+      mu: 1334.47
+      sigma: 4.0
+    gsd: 1.0
+  B191:
+    gaussian:
+      mu: 1339.48
+      sigma: 4.0
+    gsd: 1.0
+  B192:
+    gaussian:
+      mu: 1344.49
+      sigma: 4.0
+    gsd: 1.0
+  B193:
+    gaussian:
+      mu: 1349.50
+      sigma: 4.0
+    gsd: 1.0
+  B194:
+    gaussian:
+      mu: 1354.51
+      sigma: 4.0
+    gsd: 1.0
+  B195:
+    gaussian:
+      mu: 1359.52
+      sigma: 4.0
+    gsd: 1.0
+  B196:
+    gaussian:
+      mu: 1364.53
+      sigma: 4.0
+    gsd: 1.0
+  B197:
+    gaussian:
+      mu: 1369.54
+      sigma: 4.0
+    gsd: 1.0
+  B198:
+    gaussian:
+      mu: 1374.55
+      sigma: 4.0
+    gsd: 1.0
+  B199:
+    gaussian:
+      mu: 1379.56
+      sigma: 4.0
+    gsd: 1.0
+  B200:
+    gaussian:
+      mu: 1384.57
+      sigma: 4.0
+    gsd: 1.0
+  B201:
+    gaussian:
+      mu: 1389.58
+      sigma: 4.0
+    gsd: 1.0
+  B202:
+    gaussian:
+      mu: 1394.59
+      sigma: 4.0
+    gsd: 1.0
+  B203:
+    gaussian:
+      mu: 1399.60
+      sigma: 4.0
+    gsd: 1.0
+  B204:
+    gaussian:
+      mu: 1404.61
+      sigma: 4.0
+    gsd: 1.0
+  B205:
+    gaussian:
+      mu: 1409.62
+      sigma: 4.0
+    gsd: 1.0
+  B206:
+    gaussian:
+      mu: 1414.63
+      sigma: 4.0
+    gsd: 1.0
+  B207:
+    gaussian:
+      mu: 1419.64
+      sigma: 4.0
+    gsd: 1.0
+  B208:
+    gaussian:
+      mu: 1424.65
+      sigma: 4.0
+    gsd: 1.0
+  B209:
+    gaussian:
+      mu: 1429.65
+      sigma: 4.0
+    gsd: 1.0
+  B210:
+    gaussian:
+      mu: 1434.66
+      sigma: 4.0
+    gsd: 1.0
+  B211:
+    gaussian:
+      mu: 1439.67
+      sigma: 4.0
+    gsd: 1.0
+  B212:
+    gaussian:
+      mu: 1444.68
+      sigma: 4.0
+    gsd: 1.0
+  B213:
+    gaussian:
+      mu: 1449.69
+      sigma: 4.0
+    gsd: 1.0
+  B214:
+    gaussian:
+      mu: 1454.70
+      sigma: 4.0
+    gsd: 1.0
+  B215:
+    gaussian:
+      mu: 1459.71
+      sigma: 4.0
+    gsd: 1.0
+  B216:
+    gaussian:
+      mu: 1464.72
+      sigma: 4.0
+    gsd: 1.0
+  B217:
+    gaussian:
+      mu: 1469.73
+      sigma: 4.0
+    gsd: 1.0
+  B218:
+    gaussian:
+      mu: 1474.74
+      sigma: 4.0
+    gsd: 1.0
+  B219:
+    gaussian:
+      mu: 1479.75
+      sigma: 4.0
+    gsd: 1.0
+  B220:
+    gaussian:
+      mu: 1484.76
+      sigma: 4.0
+    gsd: 1.0
+  B221:
+    gaussian:
+      mu: 1489.77
+      sigma: 4.0
+    gsd: 1.0
+  B222:
+    gaussian:
+      mu: 1494.78
+      sigma: 4.0
+    gsd: 1.0
+  B223:
+    gaussian:
+      mu: 1499.79
+      sigma: 4.0
+    gsd: 1.0
+  B224:
+    gaussian:
+      mu: 1504.80
+      sigma: 4.0
+    gsd: 1.0
+  B225:
+    gaussian:
+      mu: 1509.81
+      sigma: 4.0
+    gsd: 1.0
+  B226:
+    gaussian:
+      mu: 1514.82
+      sigma: 4.0
+    gsd: 1.0
+  B227:
+    gaussian:
+      mu: 1519.83
+      sigma: 4.0
+    gsd: 1.0
+  B228:
+    gaussian:
+      mu: 1524.84
+      sigma: 4.0
+    gsd: 1.0
+  B229:
+    gaussian:
+      mu: 1529.84
+      sigma: 4.0
+    gsd: 1.0
+  B230:
+    gaussian:
+      mu: 1534.85
+      sigma: 4.0
+    gsd: 1.0
+  B231:
+    gaussian:
+      mu: 1539.86
+      sigma: 4.0
+    gsd: 1.0
+  B232:
+    gaussian:
+      mu: 1544.87
+      sigma: 4.0
+    gsd: 1.0
+  B233:
+    gaussian:
+      mu: 1549.88
+      sigma: 4.0
+    gsd: 1.0
+  B234:
+    gaussian:
+      mu: 1554.89
+      sigma: 4.0
+    gsd: 1.0
+  B235:
+    gaussian:
+      mu: 1559.90
+      sigma: 4.0
+    gsd: 1.0
+  B236:
+    gaussian:
+      mu: 1564.91
+      sigma: 4.0
+    gsd: 1.0
+  B237:
+    gaussian:
+      mu: 1569.92
+      sigma: 4.0
+    gsd: 1.0
+  B238:
+    gaussian:
+      mu: 1574.93
+      sigma: 4.0
+    gsd: 1.0
+  B239:
+    gaussian:
+      mu: 1579.94
+      sigma: 4.0
+    gsd: 1.0
+  B240:
+    gaussian:
+      mu: 1584.95
+      sigma: 4.0
+    gsd: 1.0
+  B241:
+    gaussian:
+      mu: 1589.96
+      sigma: 4.0
+    gsd: 1.0
+  B242:
+    gaussian:
+      mu: 1594.97
+      sigma: 4.0
+    gsd: 1.0
+  B243:
+    gaussian:
+      mu: 1599.98
+      sigma: 4.0
+    gsd: 1.0
+  B244:
+    gaussian:
+      mu: 1604.99
+      sigma: 4.0
+    gsd: 1.0
+  B245:
+    gaussian:
+      mu: 1610.00
+      sigma: 4.0
+    gsd: 1.0
+  B246:
+    gaussian:
+      mu: 1615.01
+      sigma: 4.0
+    gsd: 1.0
+  B247:
+    gaussian:
+      mu: 1620.02
+      sigma: 4.0
+    gsd: 1.0
+  B248:
+    gaussian:
+      mu: 1625.03
+      sigma: 4.0
+    gsd: 1.0
+  B249:
+    gaussian:
+      mu: 1630.04
+      sigma: 4.0
+    gsd: 1.0
+  B250:
+    gaussian:
+      mu: 1635.04
+      sigma: 4.0
+    gsd: 1.0
+  B251:
+    gaussian:
+      mu: 1640.05
+      sigma: 4.0
+    gsd: 1.0
+  B252:
+    gaussian:
+      mu: 1645.06
+      sigma: 4.0
+    gsd: 1.0
+  B253:
+    gaussian:
+      mu: 1650.07
+      sigma: 4.0
+    gsd: 1.0
+  B254:
+    gaussian:
+      mu: 1655.08
+      sigma: 4.0
+    gsd: 1.0
+  B255:
+    gaussian:
+      mu: 1660.09
+      sigma: 4.0
+    gsd: 1.0
+  B256:
+    gaussian:
+      mu: 1665.10
+      sigma: 4.0
+    gsd: 1.0
+  B257:
+    gaussian:
+      mu: 1670.11
+      sigma: 4.0
+    gsd: 1.0
+  B258:
+    gaussian:
+      mu: 1675.12
+      sigma: 4.0
+    gsd: 1.0
+  B259:
+    gaussian:
+      mu: 1680.13
+      sigma: 4.0
+    gsd: 1.0
+  B260:
+    gaussian:
+      mu: 1685.14
+      sigma: 4.0
+    gsd: 1.0
+  B261:
+    gaussian:
+      mu: 1690.15
+      sigma: 4.0
+    gsd: 1.0
+  B262:
+    gaussian:
+      mu: 1695.16
+      sigma: 4.0
+    gsd: 1.0
+  B263:
+    gaussian:
+      mu: 1700.17
+      sigma: 4.0
+    gsd: 1.0
+  B264:
+    gaussian:
+      mu: 1705.18
+      sigma: 4.0
+    gsd: 1.0
+  B265:
+    gaussian:
+      mu: 1710.19
+      sigma: 4.0
+    gsd: 1.0
+  B266:
+    gaussian:
+      mu: 1715.20
+      sigma: 4.0
+    gsd: 1.0
+  B267:
+    gaussian:
+      mu: 1720.21
+      sigma: 4.0
+    gsd: 1.0
+  B268:
+    gaussian:
+      mu: 1725.22
+      sigma: 4.0
+    gsd: 1.0
+  B269:
+    gaussian:
+      mu: 1730.23
+      sigma: 4.0
+    gsd: 1.0
+  B270:
+    gaussian:
+      mu: 1735.23
+      sigma: 4.0
+    gsd: 1.0
+  B271:
+    gaussian:
+      mu: 1740.24
+      sigma: 4.0
+    gsd: 1.0
+  B272:
+    gaussian:
+      mu: 1745.25
+      sigma: 4.0
+    gsd: 1.0
+  B273:
+    gaussian:
+      mu: 1750.26
+      sigma: 4.0
+    gsd: 1.0
+  B274:
+    gaussian:
+      mu: 1755.27
+      sigma: 4.0
+    gsd: 1.0
+  B275:
+    gaussian:
+      mu: 1760.28
+      sigma: 4.0
+    gsd: 1.0
+  B276:
+    gaussian:
+      mu: 1765.29
+      sigma: 4.0
+    gsd: 1.0
+  B277:
+    gaussian:
+      mu: 1770.30
+      sigma: 4.0
+    gsd: 1.0
+  B278:
+    gaussian:
+      mu: 1775.31
+      sigma: 4.0
+    gsd: 1.0
+  B279:
+    gaussian:
+      mu: 1780.32
+      sigma: 4.0
+    gsd: 1.0
+  B280:
+    gaussian:
+      mu: 1785.33
+      sigma: 4.0
+    gsd: 1.0
+  B281:
+    gaussian:
+      mu: 1790.34
+      sigma: 4.0
+    gsd: 1.0
+  B282:
+    gaussian:
+      mu: 1795.35
+      sigma: 4.0
+    gsd: 1.0
+  B283:
+    gaussian:
+      mu: 1800.36
+      sigma: 4.0
+    gsd: 1.0
+  B284:
+    gaussian:
+      mu: 1805.37
+      sigma: 4.0
+    gsd: 1.0
+  B285:
+    gaussian:
+      mu: 1810.38
+      sigma: 4.0
+    gsd: 1.0
+  B286:
+    gaussian:
+      mu: 1815.39
+      sigma: 4.0
+    gsd: 1.0
+  B287:
+    gaussian:
+      mu: 1820.40
+      sigma: 4.0
+    gsd: 1.0
+  B288:
+    gaussian:
+      mu: 1825.41
+      sigma: 4.0
+    gsd: 1.0
+  B289:
+    gaussian:
+      mu: 1830.42
+      sigma: 4.0
+    gsd: 1.0
+  B290:
+    gaussian:
+      mu: 1835.43
+      sigma: 4.0
+    gsd: 1.0
+  B291:
+    gaussian:
+      mu: 1840.43
+      sigma: 4.0
+    gsd: 1.0
+  B292:
+    gaussian:
+      mu: 1845.44
+      sigma: 4.0
+    gsd: 1.0
+  B293:
+    gaussian:
+      mu: 1850.45
+      sigma: 4.0
+    gsd: 1.0
+  B294:
+    gaussian:
+      mu: 1855.46
+      sigma: 4.0
+    gsd: 1.0
+  B295:
+    gaussian:
+      mu: 1860.47
+      sigma: 4.0
+    gsd: 1.0
+  B296:
+    gaussian:
+      mu: 1865.48
+      sigma: 4.0
+    gsd: 1.0
+  B297:
+    gaussian:
+      mu: 1870.49
+      sigma: 4.0
+    gsd: 1.0
+  B298:
+    gaussian:
+      mu: 1875.50
+      sigma: 4.0
+    gsd: 1.0
+  B299:
+    gaussian:
+      mu: 1880.51
+      sigma: 4.0
+    gsd: 1.0
+  B300:
+    gaussian:
+      mu: 1885.52
+      sigma: 4.0
+    gsd: 1.0
+  B301:
+    gaussian:
+      mu: 1890.53
+      sigma: 4.0
+    gsd: 1.0
+  B302:
+    gaussian:
+      mu: 1895.54
+      sigma: 4.0
+    gsd: 1.0
+  B303:
+    gaussian:
+      mu: 1900.55
+      sigma: 4.0
+    gsd: 1.0
+  B304:
+    gaussian:
+      mu: 1905.56
+      sigma: 4.0
+    gsd: 1.0
+  B305:
+    gaussian:
+      mu: 1910.57
+      sigma: 4.0
+    gsd: 1.0
+  B306:
+    gaussian:
+      mu: 1915.58
+      sigma: 4.0
+    gsd: 1.0
+  B307:
+    gaussian:
+      mu: 1920.59
+      sigma: 4.0
+    gsd: 1.0
+  B308:
+    gaussian:
+      mu: 1925.60
+      sigma: 4.0
+    gsd: 1.0
+  B309:
+    gaussian:
+      mu: 1930.61
+      sigma: 4.0
+    gsd: 1.0
+  B310:
+    gaussian:
+      mu: 1935.62
+      sigma: 4.0
+    gsd: 1.0
+  B311:
+    gaussian:
+      mu: 1940.62
+      sigma: 4.0
+    gsd: 1.0
+  B312:
+    gaussian:
+      mu: 1945.63
+      sigma: 4.0
+    gsd: 1.0
+  B313:
+    gaussian:
+      mu: 1950.64
+      sigma: 4.0
+    gsd: 1.0
+  B314:
+    gaussian:
+      mu: 1955.65
+      sigma: 4.0
+    gsd: 1.0
+  B315:
+    gaussian:
+      mu: 1960.66
+      sigma: 4.0
+    gsd: 1.0
+  B316:
+    gaussian:
+      mu: 1965.67
+      sigma: 4.0
+    gsd: 1.0
+  B317:
+    gaussian:
+      mu: 1970.68
+      sigma: 4.0
+    gsd: 1.0
+  B318:
+    gaussian:
+      mu: 1975.69
+      sigma: 4.0
+    gsd: 1.0
+  B319:
+    gaussian:
+      mu: 1980.70
+      sigma: 4.0
+    gsd: 1.0
+  B320:
+    gaussian:
+      mu: 1985.71
+      sigma: 4.0
+    gsd: 1.0
+  B321:
+    gaussian:
+      mu: 1990.72
+      sigma: 4.0
+    gsd: 1.0
+  B322:
+    gaussian:
+      mu: 1995.73
+      sigma: 4.0
+    gsd: 1.0
+  B323:
+    gaussian:
+      mu: 2000.74
+      sigma: 4.0
+    gsd: 1.0
+  B324:
+    gaussian:
+      mu: 2005.75
+      sigma: 4.0
+    gsd: 1.0
+  B325:
+    gaussian:
+      mu: 2010.76
+      sigma: 4.0
+    gsd: 1.0
+  B326:
+    gaussian:
+      mu: 2015.77
+      sigma: 4.0
+    gsd: 1.0
+  B327:
+    gaussian:
+      mu: 2020.78
+      sigma: 4.0
+    gsd: 1.0
+  B328:
+    gaussian:
+      mu: 2025.79
+      sigma: 4.0
+    gsd: 1.0
+  B329:
+    gaussian:
+      mu: 2030.80
+      sigma: 4.0
+    gsd: 1.0
+  B330:
+    gaussian:
+      mu: 2035.81
+      sigma: 4.0
+    gsd: 1.0
+  B331:
+    gaussian:
+      mu: 2040.82
+      sigma: 4.0
+    gsd: 1.0
+  B332:
+    gaussian:
+      mu: 2045.82
+      sigma: 4.0
+    gsd: 1.0
+  B333:
+    gaussian:
+      mu: 2050.83
+      sigma: 4.0
+    gsd: 1.0
+  B334:
+    gaussian:
+      mu: 2055.84
+      sigma: 4.0
+    gsd: 1.0
+  B335:
+    gaussian:
+      mu: 2060.85
+      sigma: 4.0
+    gsd: 1.0
+  B336:
+    gaussian:
+      mu: 2065.86
+      sigma: 4.0
+    gsd: 1.0
+  B337:
+    gaussian:
+      mu: 2070.87
+      sigma: 4.0
+    gsd: 1.0
+  B338:
+    gaussian:
+      mu: 2075.88
+      sigma: 4.0
+    gsd: 1.0
+  B339:
+    gaussian:
+      mu: 2080.89
+      sigma: 4.0
+    gsd: 1.0
+  B340:
+    gaussian:
+      mu: 2085.90
+      sigma: 4.0
+    gsd: 1.0
+  B341:
+    gaussian:
+      mu: 2090.91
+      sigma: 4.0
+    gsd: 1.0
+  B342:
+    gaussian:
+      mu: 2095.92
+      sigma: 4.0
+    gsd: 1.0
+  B343:
+    gaussian:
+      mu: 2100.93
+      sigma: 4.0
+    gsd: 1.0
+  B344:
+    gaussian:
+      mu: 2105.94
+      sigma: 4.0
+    gsd: 1.0
+  B345:
+    gaussian:
+      mu: 2110.95
+      sigma: 4.0
+    gsd: 1.0
+  B346:
+    gaussian:
+      mu: 2115.96
+      sigma: 4.0
+    gsd: 1.0
+  B347:
+    gaussian:
+      mu: 2120.97
+      sigma: 4.0
+    gsd: 1.0
+  B348:
+    gaussian:
+      mu: 2125.98
+      sigma: 4.0
+    gsd: 1.0
+  B349:
+    gaussian:
+      mu: 2130.99
+      sigma: 4.0
+    gsd: 1.0
+  B350:
+    gaussian:
+      mu: 2136.00
+      sigma: 4.0
+    gsd: 1.0
+  B351:
+    gaussian:
+      mu: 2141.01
+      sigma: 4.0
+    gsd: 1.0
+  B352:
+    gaussian:
+      mu: 2146.01
+      sigma: 4.0
+    gsd: 1.0
+  B353:
+    gaussian:
+      mu: 2151.02
+      sigma: 4.0
+    gsd: 1.0
+  B354:
+    gaussian:
+      mu: 2156.03
+      sigma: 4.0
+    gsd: 1.0
+  B355:
+    gaussian:
+      mu: 2161.04
+      sigma: 4.0
+    gsd: 1.0
+  B356:
+    gaussian:
+      mu: 2166.05
+      sigma: 4.0
+    gsd: 1.0
+  B357:
+    gaussian:
+      mu: 2171.06
+      sigma: 4.0
+    gsd: 1.0
+  B358:
+    gaussian:
+      mu: 2176.07
+      sigma: 4.0
+    gsd: 1.0
+  B359:
+    gaussian:
+      mu: 2181.08
+      sigma: 4.0
+    gsd: 1.0
+  B360:
+    gaussian:
+      mu: 2186.09
+      sigma: 4.0
+    gsd: 1.0
+  B361:
+    gaussian:
+      mu: 2191.10
+      sigma: 4.0
+    gsd: 1.0
+  B362:
+    gaussian:
+      mu: 2196.11
+      sigma: 4.0
+    gsd: 1.0
+  B363:
+    gaussian:
+      mu: 2201.12
+      sigma: 4.0
+    gsd: 1.0
+  B364:
+    gaussian:
+      mu: 2206.13
+      sigma: 4.0
+    gsd: 1.0
+  B365:
+    gaussian:
+      mu: 2211.14
+      sigma: 4.0
+    gsd: 1.0
+  B366:
+    gaussian:
+      mu: 2216.15
+      sigma: 4.0
+    gsd: 1.0
+  B367:
+    gaussian:
+      mu: 2221.16
+      sigma: 4.0
+    gsd: 1.0
+  B368:
+    gaussian:
+      mu: 2226.17
+      sigma: 4.0
+    gsd: 1.0
+  B369:
+    gaussian:
+      mu: 2231.18
+      sigma: 4.0
+    gsd: 1.0
+  B370:
+    gaussian:
+      mu: 2236.19
+      sigma: 4.0
+    gsd: 1.0
+  B371:
+    gaussian:
+      mu: 2241.20
+      sigma: 4.0
+    gsd: 1.0
+  B372:
+    gaussian:
+      mu: 2246.21
+      sigma: 4.0
+    gsd: 1.0
+  B373:
+    gaussian:
+      mu: 2251.21
+      sigma: 4.0
+    gsd: 1.0
+  B374:
+    gaussian:
+      mu: 2256.22
+      sigma: 4.0
+    gsd: 1.0
+  B375:
+    gaussian:
+      mu: 2261.23
+      sigma: 4.0
+    gsd: 1.0
+  B376:
+    gaussian:
+      mu: 2266.24
+      sigma: 4.0
+    gsd: 1.0
+  B377:
+    gaussian:
+      mu: 2271.25
+      sigma: 4.0
+    gsd: 1.0
+  B378:
+    gaussian:
+      mu: 2276.26
+      sigma: 4.0
+    gsd: 1.0
+  B379:
+    gaussian:
+      mu: 2281.27
+      sigma: 4.0
+    gsd: 1.0
+  B380:
+    gaussian:
+      mu: 2286.28
+      sigma: 4.0
+    gsd: 1.0
+  B381:
+    gaussian:
+      mu: 2291.29
+      sigma: 4.0
+    gsd: 1.0
+  B382:
+    gaussian:
+      mu: 2296.30
+      sigma: 4.0
+    gsd: 1.0
+  B383:
+    gaussian:
+      mu: 2301.31
+      sigma: 4.0
+    gsd: 1.0
+  B384:
+    gaussian:
+      mu: 2306.32
+      sigma: 4.0
+    gsd: 1.0
+  B385:
+    gaussian:
+      mu: 2311.33
+      sigma: 4.0
+    gsd: 1.0
+  B386:
+    gaussian:
+      mu: 2316.34
+      sigma: 4.0
+    gsd: 1.0
+  B387:
+    gaussian:
+      mu: 2321.35
+      sigma: 4.0
+    gsd: 1.0
+  B388:
+    gaussian:
+      mu: 2326.36
+      sigma: 4.0
+    gsd: 1.0
+  B389:
+    gaussian:
+      mu: 2331.37
+      sigma: 4.0
+    gsd: 1.0
+  B390:
+    gaussian:
+      mu: 2336.38
+      sigma: 4.0
+    gsd: 1.0
+  B391:
+    gaussian:
+      mu: 2341.39
+      sigma: 4.0
+    gsd: 1.0
+  B392:
+    gaussian:
+      mu: 2346.40
+      sigma: 4.0
+    gsd: 1.0
+  B393:
+    gaussian:
+      mu: 2351.41
+      sigma: 4.0
+    gsd: 1.0
+  B394:
+    gaussian:
+      mu: 2356.41
+      sigma: 4.0
+    gsd: 1.0
+  B395:
+    gaussian:
+      mu: 2361.42
+      sigma: 4.0
+    gsd: 1.0
+  B396:
+    gaussian:
+      mu: 2366.43
+      sigma: 4.0
+    gsd: 1.0
+  B397:
+    gaussian:
+      mu: 2371.44
+      sigma: 4.0
+    gsd: 1.0
+  B398:
+    gaussian:
+      mu: 2376.45
+      sigma: 4.0
+    gsd: 1.0
+  B399:
+    gaussian:
+      mu: 2381.46
+      sigma: 4.0
+    gsd: 1.0
+  B400:
+    gaussian:
+      mu: 2386.47
+      sigma: 4.0
+    gsd: 1.0
+  B401:
+    gaussian:
+      mu: 2391.48
+      sigma: 4.0
+    gsd: 1.0
+  B402:
+    gaussian:
+      mu: 2396.49
+      sigma: 4.0
+    gsd: 1.0
+  B403:
+    gaussian:
+      mu: 2401.50
+      sigma: 4.0
+    gsd: 1.0
+  B404:
+    gaussian:
+      mu: 2406.51
+      sigma: 4.0
+    gsd: 1.0
+  B405:
+    gaussian:
+      mu: 2411.52
+      sigma: 4.0
+    gsd: 1.0
+  B406:
+    gaussian:
+      mu: 2416.53
+      sigma: 4.0
+    gsd: 1.0
+  B407:
+    gaussian:
+      mu: 2421.54
+      sigma: 4.0
+    gsd: 1.0
+  B408:
+    gaussian:
+      mu: 2426.55
+      sigma: 4.0
+    gsd: 1.0
+  B409:
+    gaussian:
+      mu: 2431.56
+      sigma: 4.0
+    gsd: 1.0
+  B410:
+    gaussian:
+      mu: 2436.57
+      sigma: 4.0
+    gsd: 1.0
+  B411:
+    gaussian:
+      mu: 2441.58
+      sigma: 4.0
+    gsd: 1.0
+  B412:
+    gaussian:
+      mu: 2446.59
+      sigma: 4.0
+    gsd: 1.0
+  B413:
+    gaussian:
+      mu: 2451.60
+      sigma: 4.0
+    gsd: 1.0
+  B414:
+    gaussian:
+      mu: 2456.60
+      sigma: 4.0
+    gsd: 1.0
+  B415:
+    gaussian:
+      mu: 2461.61
+      sigma: 4.0
+    gsd: 1.0
+  B416:
+    gaussian:
+      mu: 2466.62
+      sigma: 4.0
+    gsd: 1.0
+  B417:
+    gaussian:
+      mu: 2471.63
+      sigma: 4.0
+    gsd: 1.0
+  B418:
+    gaussian:
+      mu: 2476.64
+      sigma: 4.0
+    gsd: 1.0
+  B419:
+    gaussian:
+      mu: 2481.65
+      sigma: 4.0
+    gsd: 1.0
+  B420:
+    gaussian:
+      mu: 2486.66
+      sigma: 4.0
+    gsd: 1.0
+  B421:
+    gaussian:
+      mu: 2491.67
+      sigma: 4.0
+    gsd: 1.0
+  B422:
+    gaussian:
+      mu: 2496.68
+      sigma: 4.0
+    gsd: 1.0
+  B423:
+    gaussian:
+      mu: 2501.69
+      sigma: 4.0
+    gsd: 1.0
+  B424:
+    gaussian:
+      mu: 2506.70
+      sigma: 4.0
+    gsd: 1.0
+  B425:
+    gaussian:
+      mu: 2511.71
+      sigma: 4.0
+    gsd: 1.0

@@ -1,0 +1,34 @@
+task:
+  id: knn
+
+  metrics:
+  - id: MulticlassAccuracy
+    top_k: 1
+    average: micro
+
+_vars: # not explicitly used in config, only as variables
+  transforms:
+  - id: Resize
+    size: 224
+
+train_dataset:
+  id: eurosat-sar
+  root: ${oc.env:RDIR}/datasets/eurosat_SAR
+  split: small_train
+  transform: ${_vars.transforms}
+
+test_dataset:
+  id: eurosat-sar
+  root: ${oc.env:RDIR}/datasets/eurosat_SAR
+  split: test
+  transform: ${_vars.transforms}
+
+heads: 
+  nb_knn: [20]
+  n_tries: 1
+
+optim:
+  dl:
+    batch_size: 200
+    num_workers: 4
+    persistent_workers: true

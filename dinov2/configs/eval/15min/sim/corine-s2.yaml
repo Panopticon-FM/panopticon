@@ -1,0 +1,62 @@
+task:
+  id: multilabelclassification
+  val_metrics:
+  - id: MultiLabelF1Score
+    average: micro
+  - id: MultiLabelF1Score
+    average: macro
+  - id: MultiLabelAveragePrecision
+    average: micro
+  - id: MultiLabelAveragePrecision
+    average: macro
+
+_vars:
+  chnselect:
+  - id: ChnSelect
+    idxs: [5,15,29,47,53,58,64,69,74,89,148,193]
+
+train_dataset:
+  id: SpectralEarth
+  root: ${oc.env:RDIR}/datasets
+  task_dir : corine
+  split: train
+  full_spectra: False
+  return_multilabel: True
+  transform:
+  - ${_vars.chnselect}
+  - ${_default_augms.train_augm}
+
+val_dataset:
+  id: SpectralEarth
+  root: ${oc.env:RDIR}/datasets
+  task_dir : corine
+  split: val
+  full_spectra: False
+  return_multilabel: True
+  transform:
+  - ${_vars.chnselect}
+  - ${_default_augms.test_augm}
+
+
+test_datasets_list:
+- id: SpectralEarth
+  root: ${oc.env:RDIR}/datasets
+  task_dir : corine
+  split: test
+  full_spectra: False
+  return_multilabel: True
+  transform:
+  - ${_vars.chnselect}
+  - ${_default_augms.test_augm}
+
+
+
+optim:
+  epochs: 10
+  save_checkpoint_frequency_epoch: 1
+  eval_period_epoch: 10
+
+  dl:
+    batch_size: 180
+    num_workers: 16
+    persistent_workers: true

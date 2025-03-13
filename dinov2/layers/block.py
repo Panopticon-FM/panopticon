@@ -114,11 +114,13 @@ class Block(nn.Module):
         return x
 
 
+
 def drop_add_residual_stochastic_depth(
     x: Tensor,
     residual_func: Callable[[Tensor], Tensor],
     sample_drop_ratio: float = 0.0,
 ) -> Tensor:
+    """ subsets batch dimension """
     # 1) extract subset using permutation
     b, n, d = x.shape
     sample_subset_size = max(int(b * (1 - sample_drop_ratio)), 1)
@@ -211,7 +213,7 @@ def drop_add_residual_stochastic_depth_list(
 class NestedTensorBlock(Block):
     def forward_nested(self, x_list: List[Tensor]) -> List[Tensor]:
         """
-        x_list contains a list of tensors to nest together and run
+        x_list contains a list of tensors ([b x n x D] where only D fixed) to nest together and run
         """
         assert isinstance(self.attn, MemEffAttention)
 

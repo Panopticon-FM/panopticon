@@ -1,0 +1,40 @@
+task:
+  id: knn
+
+_vars: # not explicitly used in config, only as variables
+  transforms:
+  - id: ListRandomResizeCrop
+    size: 224
+    scale: [0.8, 1.0]
+  - id: RandomHorizontalFlip
+    p: 0.5
+  - id: RandomVerticalFlip
+    p: 0.5
+
+train_dataset:
+  id: resisc45
+  root: ${oc.env:RDIR}/datasets/resisc45
+  split: train
+  # transform: ${_vars.transforms}
+
+val_dataset:
+  id: resisc45
+  root: ${oc.env:RDIR}/datasets/resisc45
+  split: val
+  # transform: ${_vars.transforms}
+
+test_dataset:
+  id: resisc45
+  root: ${oc.env:RDIR}/datasets/resisc45
+  split: test
+  # transform: ${_vars.transforms}
+
+heads: 
+  nb_knn: [10,20,50]
+  n_tries: 1
+
+optim:
+  dl:
+    batch_size: 512
+    num_workers: 4
+    persistent_workers: true

@@ -1,0 +1,246 @@
+task_id: segmentation
+num_classes: 16
+gsd: 3.7
+img_size: 145
+
+
+classes: # place holder
+  - Alfalfa
+  - Corn-notill
+  - Corn-mintill
+  - Corn
+  - Grass-pasture
+  - Grass-trees
+  - Grass-pasture-mowed
+  - Hay-windrowed
+  - Soybean-notill
+  - Soybean-mintill
+  - Soybean-clean
+  - Wheat
+  - Woods
+  - Buildings-Grass-Trees-Drives
+  - Stone-Steel-Towers
+
+palette: # place holder not defined by the dataset
+  - [0, 255, 255]
+  - [128, 128, 128]
+  - [0, 0, 255]
+  - [0, 255, 0]
+  - [255, 255, 0]
+  - [255, 0, 255]
+  - [0, 0, 0]
+  - [255, 255, 255]
+  - [255, 0, 0]
+  - [0, 255, 255]
+  - [255, 255, 255]
+  - [0, 0, 0]
+
+bands:
+#The ground truth available is designated into sixteen classes and is not all mutually exclusive. We have also reduced the number of bands to 200 by removing bands covering the region of water absorption: [104-108], [150-163], 220.
+  - id: aviris/B1
+  - id: aviris/B2
+  - id: aviris/B3
+  - id: aviris/B4
+  - id: aviris/B5
+  - id: aviris/B6
+  - id: aviris/B7
+  - id: aviris/B8
+  - id: aviris/B9
+  - id: aviris/B10
+  - id: aviris/B11
+  - id: aviris/B12
+  - id: aviris/B13
+  - id: aviris/B14
+  - id: aviris/B15
+  - id: aviris/B16
+  - id: aviris/B17
+  - id: aviris/B18
+  - id: aviris/B19
+  - id: aviris/B20
+  - id: aviris/B21
+  - id: aviris/B22
+  - id: aviris/B23
+  - id: aviris/B24
+  - id: aviris/B25
+  - id: aviris/B26
+  - id: aviris/B27
+  - id: aviris/B28
+  - id: aviris/B29
+  - id: aviris/B30
+  - id: aviris/B31
+  - id: aviris/B32
+  - id: aviris/B33
+  - id: aviris/B34
+  - id: aviris/B35
+  - id: aviris/B36
+  - id: aviris/B37
+  - id: aviris/B38
+  - id: aviris/B39
+  - id: aviris/B40
+  - id: aviris/B41
+  - id: aviris/B42
+  - id: aviris/B43
+  - id: aviris/B44
+  - id: aviris/B45
+  - id: aviris/B46
+  - id: aviris/B47
+  - id: aviris/B48
+  - id: aviris/B49
+  - id: aviris/B50
+  - id: aviris/B51
+  - id: aviris/B52
+  - id: aviris/B53
+  - id: aviris/B54
+  - id: aviris/B55
+  - id: aviris/B56
+  - id: aviris/B57
+  - id: aviris/B58
+  - id: aviris/B59
+  - id: aviris/B60
+  - id: aviris/B61
+  - id: aviris/B62
+  - id: aviris/B63
+  - id: aviris/B64
+  - id: aviris/B65
+  - id: aviris/B66
+  - id: aviris/B67
+  - id: aviris/B68
+  - id: aviris/B69
+  - id: aviris/B70
+  - id: aviris/B71
+  - id: aviris/B72
+  - id: aviris/B73
+  - id: aviris/B74
+  - id: aviris/B75
+  - id: aviris/B76
+  - id: aviris/B77
+  - id: aviris/B78
+  - id: aviris/B79
+  - id: aviris/B80
+  - id: aviris/B81
+  - id: aviris/B82
+  - id: aviris/B83
+  - id: aviris/B84
+  - id: aviris/B85
+  - id: aviris/B86
+  - id: aviris/B87
+  - id: aviris/B88
+  - id: aviris/B89
+  - id: aviris/B90
+  - id: aviris/B91
+  - id: aviris/B92
+  - id: aviris/B93
+  - id: aviris/B94
+  - id: aviris/B95
+  - id: aviris/B96
+  - id: aviris/B97
+  - id: aviris/B98
+  - id: aviris/B99
+  - id: aviris/B100
+  - id: aviris/B101
+  - id: aviris/B102
+  - id: aviris/B103
+  - id: aviris/B109
+  - id: aviris/B110
+  - id: aviris/B111
+  - id: aviris/B112
+  - id: aviris/B113
+  - id: aviris/B114
+  - id: aviris/B115
+  - id: aviris/B116
+  - id: aviris/B117
+  - id: aviris/B118
+  - id: aviris/B119
+  - id: aviris/B120
+  - id: aviris/B121
+  - id: aviris/B122
+  - id: aviris/B123
+  - id: aviris/B124
+  - id: aviris/B125
+  - id: aviris/B126
+  - id: aviris/B127
+  - id: aviris/B128
+  - id: aviris/B129
+  - id: aviris/B130
+  - id: aviris/B131
+  - id: aviris/B132
+  - id: aviris/B133
+  - id: aviris/B134
+  - id: aviris/B135
+  - id: aviris/B136
+  - id: aviris/B137
+  - id: aviris/B138
+  - id: aviris/B139
+  - id: aviris/B140
+  - id: aviris/B141
+  - id: aviris/B142
+  - id: aviris/B143
+  - id: aviris/B144
+  - id: aviris/B145
+  - id: aviris/B146
+  - id: aviris/B147
+  - id: aviris/B148
+  - id: aviris/B149
+  - id: aviris/B164
+  - id: aviris/B165
+  - id: aviris/B166
+  - id: aviris/B167
+  - id: aviris/B168
+  - id: aviris/B169
+  - id: aviris/B170
+  - id: aviris/B171
+  - id: aviris/B172
+  - id: aviris/B173
+  - id: aviris/B174
+  - id: aviris/B175
+  - id: aviris/B176
+  - id: aviris/B177
+  - id: aviris/B178
+  - id: aviris/B179
+  - id: aviris/B180
+  - id: aviris/B181
+  - id: aviris/B182
+  - id: aviris/B183
+  - id: aviris/B184
+  - id: aviris/B185
+  - id: aviris/B186
+  - id: aviris/B187
+  - id: aviris/B188
+  - id: aviris/B189
+  - id: aviris/B190
+  - id: aviris/B191
+  - id: aviris/B192
+  - id: aviris/B193
+  - id: aviris/B194
+  - id: aviris/B195
+  - id: aviris/B196
+  - id: aviris/B197
+  - id: aviris/B198
+  - id: aviris/B199
+  - id: aviris/B200
+  - id: aviris/B201
+  - id: aviris/B202
+  - id: aviris/B203
+  - id: aviris/B204
+  - id: aviris/B205
+  - id: aviris/B206
+  - id: aviris/B207
+  - id: aviris/B208
+  - id: aviris/B209
+  - id: aviris/B210
+  - id: aviris/B211
+  - id: aviris/B212
+  - id: aviris/B213
+  - id: aviris/B214
+  - id: aviris/B215
+  - id: aviris/B216
+  - id: aviris/B217
+  - id: aviris/B218
+  - id: aviris/B219 
+  - id: aviris/B220 
+
+
+rgb_bands:
+  - aviris/B2
+  - aviris/B3
+  - aviris/B4

@@ -14,12 +14,13 @@ from .helpers import MetricLogger, SmoothedValue
 
 
 # So that calling _configure_logger multiple times won't add many handlers
-@functools.lru_cache()
+# @functools.lru_cache()
 def _configure_logger(
     name: Optional[str] = None,
     *,
     level: int = logging.DEBUG,
     output: Optional[str] = None,
+    all_proc_to_sysout = False,
 ):
     """
     Configure a logger.
@@ -52,7 +53,7 @@ def _configure_logger(
     formatter = logging.Formatter(fmt=fmt, datefmt=datefmt)
 
     # stdout logging for main worker only
-    if distributed.is_main_process():
+    if all_proc_to_sysout or distributed.is_main_process():
         handler = logging.StreamHandler(stream=sys.stdout)
         handler.setLevel(logging.DEBUG)
         handler.setFormatter(formatter)
@@ -85,6 +86,7 @@ def setup_logging(
     name: Optional[str] = None,
     level: int = logging.DEBUG,
     capture_warnings: bool = True,
+    all_proc_to_sysout = False
 ) -> None:
     """
     Setup logging.
@@ -99,4 +101,4 @@ def setup_logging(
         capture_warnings: Whether warnings should be captured as logs.
     """
     logging.captureWarnings(capture_warnings)
-    _configure_logger(name, level=level, output=output)
+    _configure_logger(name, level=level, output=output, all_proc_to_sysout=all_proc_to_sysout)

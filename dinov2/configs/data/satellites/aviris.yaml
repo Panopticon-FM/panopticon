@@ -1,0 +1,1349 @@
+instrument: 'AVIRIS'
+processing_level: 'L1C'
+GSD: 3.7
+
+bands:
+  B1:
+    name: 'B1'
+    gaussian:
+      mu: 404.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B2:
+    name: 'B2'
+    gaussian:
+      mu: 414.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B3:
+    name: 'B3'
+    gaussian:
+      mu: 423.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B4:
+    name: 'B4'
+    gaussian:
+      mu: 432.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B5:
+    name: 'B5'
+    gaussian:
+      mu: 442.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B6:
+    name: 'B6'
+    gaussian:
+      mu: 451.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B7:
+    name: 'B7'
+    gaussian:
+      mu: 460.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B8:
+    name: 'B8'
+    gaussian:
+      mu: 470.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B9:
+    name: 'B9'
+    gaussian:
+      mu: 479.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B10:
+    name: 'B10'
+    gaussian:
+      mu: 489.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B11:
+    name: 'B11'
+    gaussian:
+      mu: 498.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B12:
+    name: 'B12'
+    gaussian:
+      mu: 507.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B13:
+    name: 'B13'
+    gaussian:
+      mu: 517.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B14:
+    name: 'B14'
+    gaussian:
+      mu: 526.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B15:
+    name: 'B15'
+    gaussian:
+      mu: 535.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B16:
+    name: 'B16'
+    gaussian:
+      mu: 545.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B17:
+    name: 'B17'
+    gaussian:
+      mu: 554.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B18:
+    name: 'B18'
+    gaussian:
+      mu: 564.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B19:
+    name: 'B19'
+    gaussian:
+      mu: 573.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B20:
+    name: 'B20'
+    gaussian:
+      mu: 582.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B21:
+    name: 'B21'
+    gaussian:
+      mu: 592.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B22:
+    name: 'B22'
+    gaussian:
+      mu: 601.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B23:
+    name: 'B23'
+    gaussian:
+      mu: 610.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B24:
+    name: 'B24'
+    gaussian:
+      mu: 620.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B25:
+    name: 'B25'
+    gaussian:
+      mu: 629.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B26:
+    name: 'B26'
+    gaussian:
+      mu: 639.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B27:
+    name: 'B27'
+    gaussian:
+      mu: 648.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B28:
+    name: 'B28'
+    gaussian:
+      mu: 657.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B29:
+    name: 'B29'
+    gaussian:
+      mu: 667.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B30:
+    name: 'B30'
+    gaussian:
+      mu: 676.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B31:
+    name: 'B31'
+    gaussian:
+      mu: 685.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B32:
+    name: 'B32'
+    gaussian:
+      mu: 695.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B33:
+    name: 'B33'
+    gaussian:
+      mu: 704.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B34:
+    name: 'B34'
+    gaussian:
+      mu: 714.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B35:
+    name: 'B35'
+    gaussian:
+      mu: 723.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B36:
+    name: 'B36'
+    gaussian:
+      mu: 732.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B37:
+    name: 'B37'
+    gaussian:
+      mu: 742.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B38:
+    name: 'B38'
+    gaussian:
+      mu: 751.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B39:
+    name: 'B39'
+    gaussian:
+      mu: 760.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B40:
+    name: 'B40'
+    gaussian:
+      mu: 770.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B41:
+    name: 'B41'
+    gaussian:
+      mu: 779.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B42:
+    name: 'B42'
+    gaussian:
+      mu: 789.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B43:
+    name: 'B43'
+    gaussian:
+      mu: 798.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B44:
+    name: 'B44'
+    gaussian:
+      mu: 807.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B45:
+    name: 'B45'
+    gaussian:
+      mu: 817.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B46:
+    name: 'B46'
+    gaussian:
+      mu: 826.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B47:
+    name: 'B47'
+    gaussian:
+      mu: 835.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B48:
+    name: 'B48'
+    gaussian:
+      mu: 845.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B49:
+    name: 'B49'
+    gaussian:
+      mu: 854.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B50:
+    name: 'B50'
+    gaussian:
+      mu: 864.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B51:
+    name: 'B51'
+    gaussian:
+      mu: 873.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B52:
+    name: 'B52'
+    gaussian:
+      mu: 882.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B53:
+    name: 'B53'
+    gaussian:
+      mu: 892.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B54:
+    name: 'B54'
+    gaussian:
+      mu: 901.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B55:
+    name: 'B55'
+    gaussian:
+      mu: 910.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B56:
+    name: 'B56'
+    gaussian:
+      mu: 920.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B57:
+    name: 'B57'
+    gaussian:
+      mu: 929.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B58:
+    name: 'B58'
+    gaussian:
+      mu: 939.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B59:
+    name: 'B59'
+    gaussian:
+      mu: 948.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B60:
+    name: 'B60'
+    gaussian:
+      mu: 957.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B61:
+    name: 'B61'
+    gaussian:
+      mu: 967.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B62:
+    name: 'B62'
+    gaussian:
+      mu: 976.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B63:
+    name: 'B63'
+    gaussian:
+      mu: 985.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B64:
+    name: 'B64'
+    gaussian:
+      mu: 995.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B65:
+    name: 'B65'
+    gaussian:
+      mu: 1004.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B66:
+    name: 'B66'
+    gaussian:
+      mu: 1014.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B67:
+    name: 'B67'
+    gaussian:
+      mu: 1023.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B68:
+    name: 'B68'
+    gaussian:
+      mu: 1032.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B69:
+    name: 'B69'
+    gaussian:
+      mu: 1042.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B70:
+    name: 'B70'
+    gaussian:
+      mu: 1051.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B71:
+    name: 'B71'
+    gaussian:
+      mu: 1060.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B72:
+    name: 'B72'
+    gaussian:
+      mu: 1070.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B73:
+    name: 'B73'
+    gaussian:
+      mu: 1079.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B74:
+    name: 'B74'
+    gaussian:
+      mu: 1089.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B75:
+    name: 'B75'
+    gaussian:
+      mu: 1098.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B76:
+    name: 'B76'
+    gaussian:
+      mu: 1107.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B77:
+    name: 'B77'
+    gaussian:
+      mu: 1117.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B78:
+    name: 'B78'
+    gaussian:
+      mu: 1126.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B79:
+    name: 'B79'
+    gaussian:
+      mu: 1135.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B80:
+    name: 'B80'
+    gaussian:
+      mu: 1145.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B81:
+    name: 'B81'
+    gaussian:
+      mu: 1154.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B82:
+    name: 'B82'
+    gaussian:
+      mu: 1164.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B83:
+    name: 'B83'
+    gaussian:
+      mu: 1173.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B84:
+    name: 'B84'
+    gaussian:
+      mu: 1182.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B85:
+    name: 'B85'
+    gaussian:
+      mu: 1192.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B86:
+    name: 'B86'
+    gaussian:
+      mu: 1201.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B87:
+    name: 'B87'
+    gaussian:
+      mu: 1210.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B88:
+    name: 'B88'
+    gaussian:
+      mu: 1220.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B89:
+    name: 'B89'
+    gaussian:
+      mu: 1229.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B90:
+    name: 'B90'
+    gaussian:
+      mu: 1239.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B91:
+    name: 'B91'
+    gaussian:
+      mu: 1248.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B92:
+    name: 'B92'
+    gaussian:
+      mu: 1257.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B93:
+    name: 'B93'
+    gaussian:
+      mu: 1267.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B94:
+    name: 'B94'
+    gaussian:
+      mu: 1276.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B95:
+    name: 'B95'
+    gaussian:
+      mu: 1285.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B96:
+    name: 'B96'
+    gaussian:
+      mu: 1295.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B97:
+    name: 'B97'
+    gaussian:
+      mu: 1304.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B98:
+    name: 'B98'
+    gaussian:
+      mu: 1314.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B99:
+    name: 'B99'
+    gaussian:
+      mu: 1323.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B100:
+    name: 'B100'
+    gaussian:
+      mu: 1332.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B101:
+    name: 'B101'
+    gaussian:
+      mu: 1342.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B102:
+    name: 'B102'
+    gaussian:
+      mu: 1351.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B103:
+    name: 'B103'
+    gaussian:
+      mu: 1360.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B104:
+    name: 'B104'
+    gaussian:
+      mu: 1370.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B105:
+    name: 'B105'
+    gaussian:
+      mu: 1379.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B106:
+    name: 'B106'
+    gaussian:
+      mu: 1389.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B107:
+    name: 'B107'
+    gaussian:
+      mu: 1398.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B108:
+    name: 'B108'
+    gaussian:
+      mu: 1407.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B109:
+    name: 'B109'
+    gaussian:
+      mu: 1417.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B110:
+    name: 'B110'
+    gaussian:
+      mu: 1426.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B111:
+    name: 'B111'
+    gaussian:
+      mu: 1435.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B112:
+    name: 'B112'
+    gaussian:
+      mu: 1445.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B113:
+    name: 'B113'
+    gaussian:
+      mu: 1454.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B114:
+    name: 'B114'
+    gaussian:
+      mu: 1464.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B115:
+    name: 'B115'
+    gaussian:
+      mu: 1473.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B116:
+    name: 'B116'
+    gaussian:
+      mu: 1482.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B117:
+    name: 'B117'
+    gaussian:
+      mu: 1492.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B118:
+    name: 'B118'
+    gaussian:
+      mu: 1501.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B119:
+    name: 'B119'
+    gaussian:
+      mu: 1510.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B120:
+    name: 'B120'
+    gaussian:
+      mu: 1520.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B121:
+    name: 'B121'
+    gaussian:
+      mu: 1529.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B122:
+    name: 'B122'
+    gaussian:
+      mu: 1539.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B123:
+    name: 'B123'
+    gaussian:
+      mu: 1548.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B124:
+    name: 'B124'
+    gaussian:
+      mu: 1557.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B125:
+    name: 'B125'
+    gaussian:
+      mu: 1567.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B126:
+    name: 'B126'
+    gaussian:
+      mu: 1576.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B127:
+    name: 'B127'
+    gaussian:
+      mu: 1585.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B128:
+    name: 'B128'
+    gaussian:
+      mu: 1595.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B129:
+    name: 'B129'
+    gaussian:
+      mu: 1604.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B130:
+    name: 'B130'
+    gaussian:
+      mu: 1614.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B131:
+    name: 'B131'
+    gaussian:
+      mu: 1623.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B132:
+    name: 'B132'
+    gaussian:
+      mu: 1632.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B133:
+    name: 'B133'
+    gaussian:
+      mu: 1642.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B134:
+    name: 'B134'
+    gaussian:
+      mu: 1651.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B135:
+    name: 'B135'
+    gaussian:
+      mu: 1660.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B136:
+    name: 'B136'
+    gaussian:
+      mu: 1670.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B137:
+    name: 'B137'
+    gaussian:
+      mu: 1679.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B138:
+    name: 'B138'
+    gaussian:
+      mu: 1689.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B139:
+    name: 'B139'
+    gaussian:
+      mu: 1698.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B140:
+    name: 'B140'
+    gaussian:
+      mu: 1707.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B141:
+    name: 'B141'
+    gaussian:
+      mu: 1717.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B142:
+    name: 'B142'
+    gaussian:
+      mu: 1726.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B143:
+    name: 'B143'
+    gaussian:
+      mu: 1735.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B144:
+    name: 'B144'
+    gaussian:
+      mu: 1745.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B145:
+    name: 'B145'
+    gaussian:
+      mu: 1754.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B146:
+    name: 'B146'
+    gaussian:
+      mu: 1764.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B147:
+    name: 'B147'
+    gaussian:
+      mu: 1773.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B148:
+    name: 'B148'
+    gaussian:
+      mu: 1782.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B149:
+    name: 'B149'
+    gaussian:
+      mu: 1792.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B150:
+    name: 'B150'
+    gaussian:
+      mu: 1801.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B151:
+    name: 'B151'
+    gaussian:
+      mu: 1810.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B152:
+    name: 'B152'
+    gaussian:
+      mu: 1820.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B153:
+    name: 'B153'
+    gaussian:
+      mu: 1829.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B154:
+    name: 'B154'
+    gaussian:
+      mu: 1839.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B155:
+    name: 'B155'
+    gaussian:
+      mu: 1848.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B156:
+    name: 'B156'
+    gaussian:
+      mu: 1857.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B157:
+    name: 'B157'
+    gaussian:
+      mu: 1867.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B158:
+    name: 'B158'
+    gaussian:
+      mu: 1876.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B159:
+    name: 'B159'
+    gaussian:
+      mu: 1885.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B160:
+    name: 'B160'
+    gaussian:
+      mu: 1895.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B161:
+    name: 'B161'
+    gaussian:
+      mu: 1904.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B162:
+    name: 'B162'
+    gaussian:
+      mu: 1914.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B163:
+    name: 'B163'
+    gaussian:
+      mu: 1923.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B164:
+    name: 'B164'
+    gaussian:
+      mu: 1932.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B165:
+    name: 'B165'
+    gaussian:
+      mu: 1942.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B166:
+    name: 'B166'
+    gaussian:
+      mu: 1951.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B167:
+    name: 'B167'
+    gaussian:
+      mu: 1960.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B168:
+    name: 'B168'
+    gaussian:
+      mu: 1970.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B169:
+    name: 'B169'
+    gaussian:
+      mu: 1979.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B170:
+    name: 'B170'
+    gaussian:
+      mu: 1989.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B171:
+    name: 'B171'
+    gaussian:
+      mu: 1998.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B172:
+    name: 'B172'
+    gaussian:
+      mu: 2007.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B173:
+    name: 'B173'
+    gaussian:
+      mu: 2017.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B174:
+    name: 'B174'
+    gaussian:
+      mu: 2026.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B175:
+    name: 'B175'
+    gaussian:
+      mu: 2035.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B176:
+    name: 'B176'
+    gaussian:
+      mu: 2045.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B177:
+    name: 'B177'
+    gaussian:
+      mu: 2054.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B178:
+    name: 'B178'
+    gaussian:
+      mu: 2064.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B179:
+    name: 'B179'
+    gaussian:
+      mu: 2073.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B180:
+    name: 'B180'
+    gaussian:
+      mu: 2082.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B181:
+    name: 'B181'
+    gaussian:
+      mu: 2092.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B182:
+    name: 'B182'
+    gaussian:
+      mu: 2101.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B183:
+    name: 'B183'
+    gaussian:
+      mu: 2110.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B184:
+    name: 'B184'
+    gaussian:
+      mu: 2120.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B185:
+    name: 'B185'
+    gaussian:
+      mu: 2129.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B186:
+    name: 'B186'
+    gaussian:
+      mu: 2139.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B187:
+    name: 'B187'
+    gaussian:
+      mu: 2148.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B188:
+    name: 'B188'
+    gaussian:
+      mu: 2157.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B189:
+    name: 'B189'
+    gaussian:
+      mu: 2167.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B190:
+    name: 'B190'
+    gaussian:
+      mu: 2176.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B191:
+    name: 'B191'
+    gaussian:
+      mu: 2185.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B192:
+    name: 'B192'
+    gaussian:
+      mu: 2195.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B193:
+    name: 'B193'
+    gaussian:
+      mu: 2204.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B194:
+    name: 'B194'
+    gaussian:
+      mu: 2214.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B195:
+    name: 'B195'
+    gaussian:
+      mu: 2223.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B196:
+    name: 'B196'
+    gaussian:
+      mu: 2232.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B197:
+    name: 'B197'
+    gaussian:
+      mu: 2242.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B198:
+    name: 'B198'
+    gaussian:
+      mu: 2251.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B199:
+    name: 'B199'
+    gaussian:
+      mu: 2260.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B200:
+    name: 'B200'
+    gaussian:
+      mu: 2270.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B201:
+    name: 'B201'
+    gaussian:
+      mu: 2279.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B202:
+    name: 'B202'
+    gaussian:
+      mu: 2289.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B203:
+    name: 'B203'
+    gaussian:
+      mu: 2298.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B204:
+    name: 'B204'
+    gaussian:
+      mu: 2307.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B205:
+    name: 'B205'
+    gaussian:
+      mu: 2317.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B206:
+    name: 'B206'
+    gaussian:
+      mu: 2326.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B207:
+    name: 'B207'
+    gaussian:
+      mu: 2335.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B208:
+    name: 'B208'
+    gaussian:
+      mu: 2345.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B209:
+    name: 'B209'
+    gaussian:
+      mu: 2354.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B210:
+    name: 'B210'
+    gaussian:
+      mu: 2364.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B211:
+    name: 'B211'
+    gaussian:
+      mu: 2373.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B212:
+    name: 'B212'
+    gaussian:
+      mu: 2382.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B213:
+    name: 'B213'
+    gaussian:
+      mu: 2392.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B214:
+    name: 'B214'
+    gaussian:
+      mu: 2401.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B215:
+    name: 'B215'
+    gaussian:
+      mu: 2410.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B216:
+    name: 'B216'
+    gaussian:
+      mu: 2420.3125
+      sigma: 4.6875
+    GSD: 3.7
+  B217:
+    name: 'B217'
+    gaussian:
+      mu: 2429.6875
+      sigma: 4.6875
+    GSD: 3.7
+  B218:
+    name: 'B218'
+    gaussian:
+      mu: 2439.0625
+      sigma: 4.6875
+    GSD: 3.7
+  B219:
+    name: 'B219'
+    gaussian:
+      mu: 2448.4375
+      sigma: 4.6875
+    GSD: 3.7
+  B220:
+    name: 'B220'
+    gaussian:
+      mu: 2457.8125
+      sigma: 4.6875
+    GSD: 3.7
+  B221:
+    name: 'B221'
+    gaussian:
+      mu: 2467.1875
+      sigma: 4.6875
+    GSD: 3.7
+  B222:
+    name: 'B222'
+    gaussian:
+      mu: 2476.5625
+      sigma: 4.6875
+    GSD: 3.7
+  B223:
+    name: 'B223'
+    gaussian:
+      mu: 2485.9375
+      sigma: 4.6875
+    GSD: 3.7
+  B224:
+    name: 'B224'
+    gaussian:
+      mu: 2495.3125
+      sigma: 4.6875
+    GSD: 3.7

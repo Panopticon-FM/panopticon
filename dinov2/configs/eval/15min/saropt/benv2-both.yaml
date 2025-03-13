@@ -1,0 +1,40 @@
+task:
+  id: multilabelclassification
+
+  val_metrics:
+  - id: MultiLabelAveragePrecision
+    average: micro
+  - id: MultiLabelAveragePrecision
+    average: macro
+
+_vars: # not explicitly used in config, only as variables
+  transform: # output is 120x120
+  - id: Resize
+    size: 224 # divisible by 14
+
+train_dataset:
+  id: benv2_webdataset
+  url: ${env:RDIR}/datasets/benv2/wds/train-all/dataset-*.tar
+  subset: 0.10
+  transform: ${_vars.transform}
+
+val_dataset:
+  id: benv2_webdataset
+  url: ${env:RDIR}/datasets/benv2/wds/validation-all/dataset-*.tar
+  transform: ${_vars.transform}
+
+test_datasets_list:
+- id: benv2_webdataset
+  url: ${env:RDIR}/datasets/benv2/wds/test-all/dataset-*.tar
+  transform: ${_vars.transform}
+
+optim:
+  epochs: 10 # or max_iter
+
+  save_checkpoint_frequency_epoch: 10
+  eval_period_epoch: 100
+
+  dl:
+    batch_size: 300
+    num_workers: 10
+    persistent_workers: true

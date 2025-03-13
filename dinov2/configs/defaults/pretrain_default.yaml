@@ -1,0 +1,161 @@
+MODEL:
+  WEIGHTS: '' # load only weights from this file
+  pretrained_weights: []
+compute_precision:
+  grad_scaler: true
+  teacher:
+    backbone:
+      sharding_strategy: NO_SHARD
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp16
+        buffer_dtype: fp32
+    dino_head:
+      sharding_strategy: NO_SHARD
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp16
+        buffer_dtype: fp32
+    ibot_head:
+      sharding_strategy: NO_SHARD
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp16
+        buffer_dtype: fp32
+  student:
+    backbone:
+      sharding_strategy: NO_SHARD
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp16
+        buffer_dtype: fp32
+    dino_head:
+      sharding_strategy: NO_SHARD
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp32
+        buffer_dtype: fp32
+    ibot_head:
+      sharding_strategy: NO_SHARD
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp32
+        buffer_dtype: fp32
+dino:
+  loss_weight: 1.0
+  head_n_prototypes: 65536
+  head_bottleneck_dim: 256
+  head_nlayers: 3
+  head_hidden_dim: 2048
+  koleo_loss_weight: 0.1
+ibot:
+  loss_weight: 1.0
+  mask_sample_probability: 0.5
+  mask_ratio_min_max:
+  - 0.1
+  - 0.5
+  separate_head: false
+  head_n_prototypes: 65536
+  head_bottleneck_dim: 256
+  head_nlayers: 3
+  head_hidden_dim: 2048
+pe_distil:
+  loss_weight: 0.0
+aux_loss:
+  enable: false
+  gating_loss_weight: 0.0
+  diversity_loss_weight: 0.0
+  sparsity_loss_weight: 0.0
+
+gradient_accumulation_steps: 1
+
+train:
+  dataset: null # need to be set in config
+  pretrain_augm: null # need to be set in config
+  
+  batch_size_per_gpu: 10
+  num_workers: 12
+  drop_last: true
+  pin_memory: true
+  persistent_workers: true
+
+  use_wandb: False
+  output_dir: .
+  saveckp_freq: 5
+  seed: 0
+  OFFICIAL_EPOCH_LENGTH: -1 
+  centering: "centering" # or "sinkhorn_knopp"
+  log_every_n_steps: 2
+student:
+  arch: vit_base
+  embed_layer: null # need to be set in config
+  patch_size: 14
+  pos_emb_img_size: 518
+  drop_path_rate: 0.3
+  layerscale: 1.0e-05
+  drop_path_uniform: true
+  pretrained_weights: []
+  ffn_layer: "mlp"
+  block_chunks: 0
+  qkv_bias: true
+  proj_bias: true
+  ffn_bias: true
+  num_register_tokens: 0
+  interpolate_antialias: false
+  interpolate_offset: 0.1
+  in_chans: 3
+teacher:
+  pretrained_weights: []
+  momentum_teacher: 0.992
+  final_momentum_teacher: 1
+  warmup_teacher_temp: 0.04
+  teacher_temp: 0.07
+  warmup_teacher_temp_epochs: 30
+optim:
+  epochs: 2
+  weight_decay: 0.04
+  weight_decay_end: 0.4
+  base_lr: 0.004  # learning rate for a batch size of 1024
+  lr: 0.  # will be set after applying scaling rule
+  warmup_epochs: 0
+  min_lr: 1.0e-06
+  lr_multiplier: patch_emb=0.2
+  freeze_weights: last_layer=1
+  scaling_rule: sqrt_wrt_1024
+  clip_grad: 3.0
+  layerwise_decay: 0.9
+  adamw_beta1: 0.9
+  adamw_beta2: 0.999
+  break_at_epochs: -1
+  online_lr_batch_scaling: false
+
+eval:
+  # global eval settings
+
+  only_eval: False # skip training and only do evaluation
+  skip: False # skip all evaluation regardless of other arguments
+
+  # eval for ckpts generated during training
+
+  config_obj: ${env:CDIR}/eval/5min # specifies config, see dinov2/eval/setup.py/parse_config_obj
+  overwrite: False # whether to recompute already existing tasks
+  overwrites: null # kwarg overwrites on all tasks, keys of nested dict with '.'
+
+  eval_period_epoch: 2
+  eval_period_iterations: -1
+  remove_ckpts: True # whether to remove the ckpts after evaluation (if kept, can compute results for other metrics)
+  include_final_ckpt: True # whether to include the final model in this evaluation
+
+  # Eval executed once for final model
+
+  final_model: 
+    config_obj: ${env:CDIR}/eval/15min
+    overwrite: False
+    overwrites: null
+
+  # legacy (just keep defaults)
+
+  use_online_eval: False
+
+add_args: True
+tmpfile: null

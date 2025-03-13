@@ -13,6 +13,7 @@ import warnings
 
 from torch import Tensor
 from torch import nn
+import torch
 
 
 logger = logging.getLogger("dinov2")

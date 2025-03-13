@@ -10,38 +10,15 @@ import torch
 from torch import nn
 from torchmetrics import MetricCollection
 
+from dinov2.utils.data import dict_to_device
 from dinov2.data import DatasetWithEnumeratedTargets, SamplerType, make_data_loader
 import dinov2.distributed as distributed
 from dinov2.logging import MetricLogger
-
+import torch.distributed as dist
+import webdataset as wds
+import numpy as np
 
 logger = logging.getLogger("dinov2")
-
-
-class ModelWithNormalize(torch.nn.Module):
-    def __init__(self, model):
-        super().__init__()
-        self.model = model
-
-    def forward(self, samples):
-        return nn.functional.normalize(self.model(samples), dim=1, p=2)
-
-
-class ModelWithIntermediateLayers(nn.Module):
-    def __init__(self, feature_model, n_last_blocks, autocast_ctx):
-        super().__init__()
-        self.feature_model = feature_model
-        self.feature_model.eval()
-        self.n_last_blocks = n_last_blocks
-        self.autocast_ctx = autocast_ctx
-
-    def forward(self, images):
-        with torch.inference_mode():
-            with self.autocast_ctx():
-                features = self.feature_model.get_intermediate_layers(
-                    images, self.n_last_blocks, return_class_token=True
-                )
-        return features
 
 
 @torch.inference_mode()
@@ -64,7 +41,7 @@ def evaluate(
     header = "Test:"
 
     for samples, targets, *_ in metric_logger.log_every(data_loader, 10, header):
-        outputs = model(samples.to(device))
+        outputs = model(dict_to_device(samples, device))
         targets = targets.to(device)
 
         if criterion is not None:
@@ -79,6 +56,7 @@ def evaluate(
     logger.info(f"Averaged stats: {metric_logger}")
 
     stats = {k: metric.compute() for k, metric in metrics.items()}
+    logger.debug(f'Post compute')
     metric_logger_stats = {k: meter.global_avg for k, meter in metric_logger.meters.items()}
     return metric_logger_stats, stats
 
@@ -91,20 +69,23 @@ def all_gather_and_flatten(tensor_rank):
         device=tensor_rank.device,
     )
     tensor_list = list(tensor_all_ranks.unbind(0))
-    torch.distributed.all_gather(tensor_list, tensor_rank.contiguous())
+    if distributed.is_enabled():
+        dist.all_gather(tensor_list, tensor_rank.contiguous())
+    else:
+        tensor_all_ranks = tensor_rank.unsqueeze(0)
     return tensor_all_ranks.flatten(end_dim=1)
 
 
-def extract_features(model, dataset, batch_size, num_workers, gather_on_cpu=False):
+def extract_features(model, dataset, dl_cfg, gather_on_cpu=False):
     dataset_with_enumerated_targets = DatasetWithEnumeratedTargets(dataset)
     sample_count = len(dataset_with_enumerated_targets)
+    sampler_type = SamplerType.DISTRIBUTED if distributed.is_enabled() else SamplerType.EPOCH
     data_loader = make_data_loader(
         dataset=dataset_with_enumerated_targets,
-        batch_size=batch_size,
-        num_workers=num_workers,
-        sampler_type=SamplerType.DISTRIBUTED,
+        sampler_type=sampler_type,
         drop_last=False,
         shuffle=False,
+        **dl_cfg
     )
     return extract_features_with_dataloader(model, data_loader, sample_count, gather_on_cpu)
 
@@ -115,7 +96,12 @@ def extract_features_with_dataloader(model, data_loader, sample_count, gather_on
     metric_logger = MetricLogger(delimiter="  ")
     features, all_labels = None, None
     for samples, (index, labels_rank) in metric_logger.log_every(data_loader, 10):
-        samples = samples.cuda(non_blocking=True)
+        if isinstance(samples, dict):
+            for k, v in samples.items():
+                if isinstance(v, torch.Tensor):
+                    samples[k] = v.cuda(non_blocking=True)
+        else:
+            samples = samples.cuda(non_blocking=True)
         labels_rank = labels_rank.cuda(non_blocking=True)
         index = index.cuda(non_blocking=True)
         features_rank = model(samples).float()
@@ -144,3 +130,44 @@ def extract_features_with_dataloader(model, data_loader, sample_count, gather_on
     assert torch.all(all_labels > -1)
 
     return features, all_labels
+
+def get_num_classes(ds):
+    if isinstance(ds, wds.WebDataset):
+        num_classes = ds.num_classes  # assigned in make_dataset
+    else:
+        if isinstance(ds, torch.utils.data.Subset):
+            ds = ds.dataset
+        # num_classes = len(torch.unique(torch.Tensor(handle.get_targets().astype(int))))
+        num_classes = ds.num_classes
+    return num_classes
+
+def sample_indices_hs(
+        nbands,
+        nsamples,
+        exclude = [5,15,29,47,53,58,64,69,74,89,148,193], # sentinel2 indices of corine
+        radius_around_excluded = 3,
+        mode = 'bin_before_remove'
+    ):
+
+    indices_to_exclude = set()
+    for i in exclude:
+        indices_to_exclude.update(range(i-radius_around_excluded, i+radius_around_excluded+1))
+    
+    if mode == 'remove_before_bin':
+        indices = np.array([i for i in range(nbands) if i not in indices_to_exclude])
+        parts = np.array_split(indices, nsamples)
+    elif mode == 'bin_before_remove':
+        parts = np.array_split(np.array(range(nbands)), nsamples)
+        parts = [np.array([i for i in part if i not in indices_to_exclude]) for part in parts]
+    else:
+        raise ValueError(f'Unknown mode {mode}')
+    
+    indices_out = []
+    for i, part in enumerate(parts):
+        assert len(part) > 0, f'part {i} is empty, need to decrease radius, change mode, or decrease nsamples '
+        print(f'part {i}: {part[0]}-{part[-1]}')
+        idx = np.random.choice(part, 1)
+        print(f'picked {idx}')
+        indices_out.append(idx)
+    
+    return np.concatenate(indices_out)

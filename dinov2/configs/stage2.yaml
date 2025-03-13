@@ -1,0 +1,194 @@
+MODEL:
+  WEIGHTS: path/to/stage1/run/model_final.pth
+  pretrained_weights: []
+compute_precision:
+  grad_scaler: true
+  teacher:
+    backbone:
+      sharding_strategy: NO_SHARD
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp16
+        buffer_dtype: fp32
+    dino_head:
+      sharding_strategy: NO_SHARD
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp16
+        buffer_dtype: fp32
+    ibot_head:
+      sharding_strategy: NO_SHARD
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp16
+        buffer_dtype: fp32
+  student:
+    backbone:
+      sharding_strategy: NO_SHARD
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp16
+        buffer_dtype: fp32
+    dino_head:
+      sharding_strategy: NO_SHARD
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp32
+        buffer_dtype: fp32
+    ibot_head:
+      sharding_strategy: NO_SHARD
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp32
+        buffer_dtype: fp32
+dino:
+  loss_weight: 1.0
+  head_n_prototypes: 65536
+  head_bottleneck_dim: 256
+  head_nlayers: 3
+  head_hidden_dim: 2048
+  koleo_loss_weight: 0.0
+ibot:
+  loss_weight: 0.1
+  mask_sample_probability: 0.5
+  mask_ratio_min_max:
+  - 0.1
+  - 0.5
+  separate_head: false
+  head_n_prototypes: 65536
+  head_bottleneck_dim: 256
+  head_nlayers: 3
+  head_hidden_dim: 2048
+aux_loss:
+  enable: false
+  gating_loss_weight: 0.0
+  diversity_loss_weight: 0.0
+  sparsity_loss_weight: 0.0
+gradient_accumulation_steps: 1
+train:
+  dataset:
+    id: ConcatDataset
+    datasets:
+    - id: FmowDataset
+      root: ${oc.env:RDIR}/datasets/
+      split: ${oc.env:RDIR}/datasets/fmow/metadata_v2/fmow_iwm_onid_train_val_savioclean_min42max1024.parquet
+      num_sens: 2
+      full_spectra: false
+      subset: 800000 # super-sample to adjust for the indexing by location (several 100 views per location)
+    - id: SatlasDataset
+      root: ${oc.env:RDIR}/datasets/satlas
+      num_sens: 2
+      full_spectra: false
+      metadata_path: ${oc.env:RDIR}/datasets/satlas/metadata_v2/fmow_iwm_onid_3sensors_all_clean.parquet
+    - id: MMEarth
+      base_path: ${oc.env:RDIR}/datasets/mmearth/data_1M_v001
+      split: train
+      modalities: MODALITY_MINIMAL_SET1
+      full_spectra: false
+    - id: SpectralEarth
+      split: train
+      root: ${oc.env:RDIR}/datasets/
+      full_spectra: false
+  pretrain_augm:
+    id: PanopticonAugmentation
+    global_crops_number: 2
+    global_crops_size: 224
+    global_crops_scale:
+    - 0.32
+    - 1.0
+    global_crops_spectral_size:
+    - 4
+    - 13
+    global_multi_select_view_in_single_sensor_modes: false
+    global_hs_modes_probs:
+    - 1
+    - 0
+    local_crops_number: 4
+    local_crops_size: 98
+    local_crops_scale:
+    - 0.05
+    - 0.32
+    local_crops_spectral_size:
+    - 1
+    - 4
+    local_multi_select_view_in_single_sensor_modes: true
+    local_hs_modes_probs:
+    - 1
+    - 0
+  batch_size_per_gpu: 75
+  num_workers: 16
+  drop_last: true
+  pin_memory: true
+  persistent_workers: true
+  use_wandb: true
+  saveckp_freq: 5
+  seed: 21
+  OFFICIAL_EPOCH_LENGTH: 1250
+  centering: centering
+  log_every_n_steps: 10
+student:
+  arch: vit_base
+  embed_layer: PanopticonPE
+  patch_size: 14
+  pos_emb_img_size: 518
+  drop_path_rate: 0.0
+  layerscale: 1.0e-05
+  drop_path_uniform: true
+  pretrained_weights: []
+  ffn_layer: mlp
+  block_chunks: 0
+  qkv_bias: true
+  proj_bias: true
+  ffn_bias: true
+  num_register_tokens: 0
+  interpolate_antialias: false
+  interpolate_offset: 0.1
+  pe_args:
+    attn_dim: 2304
+    chnfus_cfg:
+      layer_norm: false
+      attn_cfg:
+        num_heads: 16
+teacher:
+  pretrained_weights: []
+  momentum_teacher: 0.994
+  final_momentum_teacher: 1.0
+  warmup_teacher_temp: 0.04
+  teacher_temp: 0.07
+  warmup_teacher_temp_epochs: 5
+optim:
+  epochs: 70
+  weight_decay: 0.04
+  weight_decay_end: 0.2
+  base_lr: 0.0005
+  lr: 0.0005412658773652743
+  warmup_epochs: 5
+  min_lr: 1.0e-06
+  lr_multiplier: blocks=0.2
+  freeze_weights: last_layer=1
+  scaling_rule: sqrt_wrt_1024
+  clip_grad: 3.0
+  layerwise_decay: 0.9
+  adamw_beta1: 0.9
+  adamw_beta2: 0.999
+  break_at_epochs: -1
+  online_lr_batch_scaling: false
+  hold_epochs: 0
+eval:
+  only_eval: false
+  skip: false
+  config_obj: ${oc.env:CDIR}/eval/oe
+  overwrite: false
+  overwrites:
+    optim:
+      dl:
+        batch_size: 200
+        num_workers: 8
+  eval_period_epoch: 2
+  eval_period_iterations: -1
+  remove_ckpts: false
+  include_final_ckpt: true
+  final_model:
+    config_obj: ${oc.env:CDIR}/eval/oe;${oc.env:CDIR}/eval/fm/
+    overwrite: false
+    overwrites: null

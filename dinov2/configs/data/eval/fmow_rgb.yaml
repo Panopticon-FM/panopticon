@@ -1,0 +1,7 @@
+bands:
+- id: qb2_ge1/B03
+- id: qb2_ge1/B02
+- id: qb2_ge1/B01
+
+task_id: classification
+num_classes: 63
