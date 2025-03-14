@@ -15,7 +15,7 @@ To use Panopticon, just install torch and follow this example:
 import torch
 
 # load model
-model = torch.hub.load('repo/tbd','panopticon_vitb14')
+model = torch.hub.load('Panopticon-FM/panopticon','panopticon_vitb14')
 
 # generate example input
 x_dict = dict(
@@ -36,7 +36,7 @@ patch_tokens = [blk[0] for blk in blocks]
 assert tuple(cls_tokens[0].shape) == (2, 768)
 assert tuple(patch_tokens[0].shape) == (2, (224/14)**2, 768)
 ```
-For best results, please follow the pre-training settings of Panopticon: 224x224 images with standard normal normalization.
+For best results, please follow the pre-training settings of Panopticon: 224x224 images with standard normal normalization. The code automatically downloads the teacher weights, access to the full weights and the weights of the dino heads from RGB pre-training (as described in the paper) [here](https://huggingface.co/lewaldm/panopticon).
 
 ## Installation
 Setup the conda environment with
@@ -186,7 +186,7 @@ PYTHONPATH=. python dinov2/train/train.py \
 ```
 you can evaluate your training run with
 ```
-PYTHONPATH=. python dinov2/eval/main.py main \
+PYTHONPATH=. python dinov2/eval/eval.py main \
   --model-obj=$ODIR/my_run_dir \
   --config-obj=dinov2/configs/eval/5min;dinov2/configs/eval/1h/geobench/so2sat.yaml \
 ```
@@ -194,7 +194,7 @@ with outputs being logged to ``$ODIR/my_run_dir/eval_model_final``.
 
 
 ## Changes to DINOv2
-To enable an exact comparison, the first commit is a git clone of the dinov2 codebase, the second commit is Panopticon. Written in natural language, the biggest changes are:
+To allow an exact comparison, the first commit is the dinov2 codebase (at [this commit](https://github.com/facebookresearch/dinov2/commit/e1277af2ba9496fbadf7aec6eba56e8d882d1e35)), the second commit is Panopticon. Written in natural language, the biggest changes are:
 - added a new patch embedding in `dinov2/models/panopticon.py` and new augmentations in `dinov2/data/augmentations.py`
 - added several remote sensing datasets and changed main data object to a dictionary with images and channel information
 - evaluation engine mostly untouched but added (1) calling wrappers for easier configuration and (2) task distribution over GPUs within initialized torch.distributed environment in `dinov2/eval/eval.py` and `dinov2/eval/offline_train_eval.py`
@@ -202,7 +202,7 @@ To enable an exact comparison, the first commit is a git clone of the dinov2 cod
 
 
 ## Citing Panopticon
-If you find this work useful, consider citing (coming soon!)
+If you find this work useful, consider citing 
 ```
-PROPER BIBTEX
+[coming soon!]
 ```
