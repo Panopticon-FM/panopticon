@@ -86,7 +86,7 @@ Please download this dataset directly from the [DLR website](https://geoservice.
 
 ### Metadata Files
 
-In addition, to use these datasets as paired-sensor inputs, as required by this pretraining paradigm, you will need metadata files that are indexed by footprint. Please download the metadata files directly from this link and place each `metadata_v2` folder under the respective dataset directories for `fmow`, `fmow-sentinel` and `satlas` only (`mmearth` and `spectral_earth` come pre-indexed by footprint). Your directory structure should be similar to the one below after acquiring all these datasets:
+In addition, to use these datasets as paired-sensor inputs, as required by this pretraining paradigm, you will need metadata files that are indexed by footprint. Please download the metadata files directly from [this link](https://huggingface.co/lewaldm/panopticon) and place each `metadata_v2` folder under the respective dataset directories for `fmow`, `fmow-sentinel` and `satlas` only (`mmearth` and `spectral_earth` come pre-indexed by footprint). Your directory structure should be similar to the one below after acquiring all these datasets:
 
 
 ```
