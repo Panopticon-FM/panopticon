@@ -1,5 +1,5 @@
 # Panopticon
-This repository contains the official implementation of the paper [Panopticon: Advancing Any-Sensor Foundation Models for Earth Observation](). The code is heavily based on the [official DINOv2 codebase](https://github.com/facebookresearch/dinov2), with the main novelties being the patch embedding in `dinov2/models/panopticon.py` and the augmentations in `dinov2/data/augmentations.py`.
+This repository contains the official implementation of the paper [Panopticon: Advancing Any-Sensor Foundation Models for Earth Observation](https://www.arxiv.org/abs/2503.10845). The code is heavily based on the [official DINOv2 codebase](https://github.com/facebookresearch/dinov2), with the main novelties being the patch embedding in `dinov2/models/panopticon.py` and the augmentations in `dinov2/data/augmentations.py`.
 
 ![](figs/arch_v4_hq.jpeg)
 Panopticon Architecture Overview. Orange frame shows deviations from standard DINOv2.
@@ -204,5 +204,11 @@ To allow an exact comparison, the first commit is the dinov2 codebase (at [this 
 ## Citing Panopticon
 If you find this work useful, consider citing 
 ```
-[coming soon!]
+@misc{waldmannshah2025panopticon,
+      title={Panopticon: Advancing Any-Sensor Foundation Models for Earth Observation}, 
+      author={Leonard Waldmann and Ando Shah and Yi Wang and Nils Lehmann and Adam J. Stewart and Zhitong Xiong and Xiao Xiang Zhu and Stefan Bauer and John Chuang},
+      year={2025},
+      eprint={2503.10845},
+      archivePrefix={arXiv},
+}
 ```
