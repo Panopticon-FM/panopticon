@@ -7,7 +7,11 @@ Panopticon Architecture Overview. Orange frame shows deviations from standard DI
 <!-- Big parts of `dinov2/eval/wrapper.py` and all code in `dinov2/eval/models/*` is 
 taken from https://github.com/zhu-xlab/DOFA (which is itself mainly taken from the original repos). -->
 
-
+## Updates
+- Panopticon has been accepted to the [EarthVision workshop at CVPR 2025](https://www.grss-ieee.org/events/earthvision-2025/) 🥳 ! We'll be in Nashville, TN in June - drop by and say hello!
+- Panopticon accepted as an oral presentation at the European Space Agency's [Living Planet Symposium 2025](https://lps25.esa.int/), held in Vienna in June 2025 ⛰️
+- We will also be at [IGARRS 2025](https://2025.ieeeigarss.org/index.php) - this year in Brisbane 🦘!
+- Panopticon has been added as a model to [TorchGeo 0.7](https://torchgeo.readthedocs.io/en/stable/api/models.html#panopticon) - makes its super easy to use with the existing RS datasets
 
 ## Using Panopticon
 To use Panopticon, just install torch and follow this example:
@@ -212,3 +216,6 @@ If you find this work useful, consider citing
       archivePrefix={arXiv},
 }
 ```
+
+## Collaborations
+If you're interested in working with foundation models for earth observation applications, feel free to drop us a line (ando@berkeley.edu). We're working on multiple application domains to assess their usability, and would love to learn more about your project(s)!
