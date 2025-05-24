@@ -1,4 +1,8 @@
 # Panopticon
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+![Static Badge](https://img.shields.io/badge/arxiv-Panopticon-yellow?style=flat&logo=arxiv&logoColor=yellow&link=https%3A%2F%2Farxiv.org%2Fabs%2F2503.10845)
+
+
 This repository contains the official implementation of the paper [Panopticon: Advancing Any-Sensor Foundation Models for Earth Observation](https://www.arxiv.org/abs/2503.10845). The code is heavily based on the [official DINOv2 codebase](https://github.com/facebookresearch/dinov2), with the main novelties being the patch embedding in `dinov2/models/panopticon.py` and the augmentations in `dinov2/data/augmentations.py`.
 
 ![](figs/arch_v4_hq.jpeg)
@@ -8,8 +12,8 @@ Panopticon Architecture Overview. Orange frame shows deviations from standard DI
 taken from https://github.com/zhu-xlab/DOFA (which is itself mainly taken from the original repos). -->
 
 ## Updates
-- Panopticon has been accepted to the [EarthVision workshop at CVPR 2025](https://www.grss-ieee.org/events/earthvision-2025/) 🥳 ! We'll be in Nashville, TN in June - drop by and say hello!
-- Panopticon accepted as an oral presentation at the European Space Agency's [Living Planet Symposium 2025](https://lps25.esa.int/), held in Vienna in June 2025 ⛰️
+- Panopticon has selected as the **best paper** at the [EarthVision workshop at CVPR 2025](https://www.grss-ieee.org/events/earthvision-2025/) 🥳 ! We'll be in Nashville, TN in June - drop by and say hello!
+- Panopticon will be presented at the European Space Agency's [Living Planet Symposium 2025](https://lps25.esa.int/), held in Vienna in June 2025 ⛰️
 - We will also be at [IGARRS 2025](https://2025.ieeeigarss.org/index.php) - this year in Brisbane 🦘!
 - Panopticon has been added as a model to [TorchGeo 0.7](https://torchgeo.readthedocs.io/en/stable/api/models.html#panopticon) - makes its super easy to use with the existing RS datasets
 
@@ -203,6 +207,10 @@ To allow an exact comparison, the first commit is the dinov2 codebase (at [this 
 - added several remote sensing datasets and changed main data object to a dictionary with images and channel information
 - evaluation engine mostly untouched but added (1) calling wrappers for easier configuration and (2) task distribution over GPUs within initialized torch.distributed environment in `dinov2/eval/eval.py` and `dinov2/eval/offline_train_eval.py`
 - added more flexible checkpoint loading
+
+## License
+
+This codebase is licensed under the Apache License 2.0, with portions of third-party code licensed under the MIT License. The model weights are licensed under the CC-BY-4.0 license.
 
 
 ## Citing Panopticon
