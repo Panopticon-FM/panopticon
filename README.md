@@ -1,6 +1,7 @@
 # Panopticon
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![Static Badge](https://img.shields.io/badge/arxiv-Panopticon-yellow?style=flat&logo=arxiv&logoColor=yellow&link=https%3A%2F%2Farxiv.org%2Fabs%2F2503.10845)
+![Static Badge](https://img.shields.io/badge/CVPR2025-EarthVision-purple?style=flat&link=https%3A%2F%2Fwww.grss-ieee.org%2Fevents%2Fearthvision-2025%2F)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
 This repository contains the official implementation of the paper [Panopticon: Advancing Any-Sensor Foundation Models for Earth Observation](https://www.arxiv.org/abs/2503.10845). The code is heavily based on the [official DINOv2 codebase](https://github.com/facebookresearch/dinov2), with the main novelties being the patch embedding in `dinov2/models/panopticon.py` and the augmentations in `dinov2/data/augmentations.py`.
