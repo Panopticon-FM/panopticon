@@ -1,6 +1,6 @@
 # Panopticon
-![Static Badge](https://img.shields.io/badge/arxiv-Panopticon-yellow?style=flat&logo=arxiv&logoColor=yellow&link=https%3A%2F%2Farxiv.org%2Fabs%2F2503.10845)
-![Static Badge](https://img.shields.io/badge/CVPR2025-EarthVision-purple?style=flat&link=https%3A%2F%2Fwww.grss-ieee.org%2Fevents%2Fearthvision-2025%2F)
+[![arXiv-Panopticon](https://img.shields.io/badge/arxiv-Panopticon-yellow?style=flat&logo=arxiv&logoColor=yellow)](https://arxiv.org/abs/2503.10845)
+[![CVPR2025-EarthVision](https://img.shields.io/badge/CVPR2025-EarthVision-purple?style=flat)](https://www.grss-ieee.org/events/earthvision-2025/)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
