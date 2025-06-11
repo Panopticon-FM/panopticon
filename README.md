@@ -13,6 +13,7 @@ Panopticon Architecture Overview. Orange frame shows deviations from standard DI
 taken from https://github.com/zhu-xlab/DOFA (which is itself mainly taken from the original repos). -->
 
 ## Updates
+- We released our refactored evaluation codebase [Geobreeze](https://github.com/geobreeze/geobreeze)!
 - Panopticon has selected as the **best paper** at the [EarthVision workshop at CVPR 2025](https://www.grss-ieee.org/events/earthvision-2025/) 🥳 ! We'll be in Nashville, TN in June - drop by and say hello!
 - Panopticon will be presented at the European Space Agency's [Living Planet Symposium 2025](https://lps25.esa.int/), held in Vienna in June 2025 ⛰️
 - We will also be at [IGARRS 2025](https://2025.ieeeigarss.org/index.php) - this year in Brisbane 🦘!
@@ -178,7 +179,7 @@ For an overview of default arguments, see `dinov2/configs/pretrain_default.yaml`
 
 
 ## Evaluation
-This section only refers to the evaluation of Panopticon (c.f. ablations in the paper). The code for comparison with other models (c.f. evaluation section in the paper) will be released soon, stay tuned!
+This section only refers to the evaluation of Panopticon (c.f. ablations in the paper). The code for comparison with other models (c.f. evaluation section in the paper) can be found [here](https://github.com/geobreeze/geobreeze).
 
 The task configs are in `dinov2/configs/eval/` and the metric averages are defined in `dinov2/configs/defaults/wandb_averages.yaml`.
 
