@@ -48,6 +48,8 @@ assert tuple(patch_tokens[0].shape) == (2, (224/14)**2, 768)
 ```
 For best results, please follow the pre-training settings of Panopticon: 224x224 images with standard normal normalization. The code automatically downloads the teacher weights, access to the full weights and the weights of the dino heads from RGB pre-training (as described in the paper) [here](https://huggingface.co/lewaldm/panopticon).
 
+When passing a SAR channel, pick the chn_id from one of the 12 categories -1, ..., -12 as detailed [here](https://github.com/geobreeze/geobreeze/blob/main/geobreeze/datasets/metadata/sensors/sentinel1.yaml) (chn_ids = gaussian.mu).
+
 ## Installation
 Setup the conda environment with
 ```
