@@ -220,12 +220,12 @@ This codebase is licensed under the Apache License 2.0, with portions of third-p
 ## Citing Panopticon
 If you find this work useful, please consider citing 
 ```
-@inproceedings{waldmann2025panopticon,
-  title={Panopticon: Advancing any-sensor foundation models for earth observation},
-  author={Waldmann, Leonard and Shah, Ando and Wang, Yi and Lehmann, Nils and Stewart, Adam and Xiong, Zhitong and Zhu, Xiao Xiang and Bauer, Stefan and Chuang, John},
-  booktitle={Proceedings of the Computer Vision and Pattern Recognition Conference},
-  pages={2204--2214},
-  year={2025}
+@inproceedings{waldmann_shah_2025_panopticon,
+    author={Waldmann, Leonard and Shah, Ando and Wang, Yi and Lehmann, Nils and Stewart, Adam and Xiong, Zhitong and Zhu, Xiao Xiang and Bauer, Stefan and Chuang, John},
+    title={Panopticon: Advancing Any-Sensor Foundation Models for Earth Observation},
+    booktitle={Proceedings of the Computer Vision and Pattern Recognition Conference (CVPR) Workshops},
+    year={2025},
+    pages={2204-2214}
 }
 ```
 
